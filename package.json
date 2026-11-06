@@ -19,7 +19,8 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:install": "playwright install --with-deps chromium",
-    "prepare": "husky"
+    "prepare": "husky",
+    "spike": "tsx scripts/world-spike.ts"
   },
   "lint-staged": {
     "*.{ts,tsx,js,mjs}": [
@@ -34,6 +35,8 @@
     ]
   },
   "dependencies": {
+    "@worldcoin/idkit-core": "4.6.0",
+    "@noble/hashes": "1.8.0",
     "clsx": "^2.1.1",
     "lenis": "1.3.27",
     "lucide-react": "^1.69.0",
@@ -41,6 +44,7 @@
     "next": "16.4.5",
     "react": "19.3.0",
     "react-dom": "19.3.0",
+    "qrcode": "1.5.4",
     "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
@@ -54,6 +58,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/qrcode": "1.5.5",
     "eslint": "^9",
     "eslint-config-next": "16.4.5",
     "husky": "9.1.7",
@@ -64,6 +69,7 @@
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
+    "tsx": "4.20.5",
     "typescript": "^5"
   },
   "engines": {

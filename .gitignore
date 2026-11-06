@@ -45,3 +45,7 @@ next-env.d.ts
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# World ID spike (local evidence and replay state)
+/spike-results.jsonl
+/spike-last-proof.json
