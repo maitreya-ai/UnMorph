@@ -8,7 +8,10 @@ import { Landscape, TAMPER_REGIONS } from "@/components/visuals/landscape";
 import { timeAgo, type HistoryEvent, type Verification } from "@/lib/mock-data";
 import { cn, formatBytes, truncateMiddle } from "@/lib/utils";
 
-const historyIcon: Record<HistoryEvent["type"], React.ComponentType<{ className?: string }>> = {
+const historyIcon: Record<
+  HistoryEvent["type"],
+  React.ComponentType<{ className?: string; strokeWidth?: number }>
+> = {
   registered: Database,
   verified: ShieldCheck,
   "tamper-detected": ShieldX,
@@ -56,7 +59,7 @@ export function VerificationDrawer({
           aria-labelledby="drawer-title"
         >
           <motion.div
-            className="absolute inset-0 bg-ink/30 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-nb-black/60"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -66,15 +69,17 @@ export function VerificationDrawer({
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", stiffness: 340, damping: 36 }}
-            className="absolute inset-y-0 right-0 flex w-full max-w-[460px] flex-col overflow-hidden bg-white shadow-2xl sm:inset-y-3 sm:right-3 sm:rounded-[28px]"
+            transition={{ type: "tween", duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute inset-y-0 right-0 flex w-full max-w-[480px] flex-col overflow-hidden border-l-4 border-nb-black bg-nb-bg"
           >
-            <header className="flex items-start justify-between gap-4 border-b border-line/70 p-5">
+            <header className="flex items-start justify-between gap-4 border-b-4 border-nb-black bg-nb-yellow p-5">
               <div className="min-w-0">
-                <p className="text-[12px] text-muted">{item.id} · Integrity report</p>
+                <p className="font-mono text-[11px] tracking-[0.1em] text-nb-black uppercase">
+                  {item.id} · Integrity report
+                </p>
                 <h2
                   id="drawer-title"
-                  className="mt-0.5 truncate font-display text-lg font-medium tracking-tight text-ink"
+                  className="mt-1 truncate text-[1.4rem] leading-tight text-nb-black"
                 >
                   {item.fileName}
                 </h2>
@@ -84,20 +89,20 @@ export function VerificationDrawer({
                 type="button"
                 onClick={onClose}
                 aria-label="Close report"
-                className="grid size-9 shrink-0 place-items-center rounded-xl text-muted ring-1 ring-line transition-colors hover:bg-canvas hover:text-ink"
+                className="grid size-10 shrink-0 nb-press-sm place-items-center border-[3px] border-nb-black bg-nb-surface text-nb-black"
               >
-                <X className="size-4" />
+                <X className="size-4.5" strokeWidth={2.75} />
               </button>
             </header>
 
             <div className="flex-1 overflow-y-auto p-5">
-              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl ring-1 ring-line/70">
+              <div className="relative aspect-[16/10] overflow-hidden border-[3px] border-nb-black shadow-nb">
                 <Landscape variant={item.scene} tampered={item.verdict === "tampered"} />
                 {item.verdict === "tampered" &&
                   TAMPER_REGIONS.slice(0, Math.min(2, item.alteredRegions)).map((r) => (
                     <span
                       key={r.id}
-                      className="absolute rounded-md border-2 border-verdict-tampered bg-verdict-tampered/15"
+                      className="absolute nb-tamper"
                       style={{
                         left: `${r.left}%`,
                         top: `${r.top}%`,
@@ -111,14 +116,16 @@ export function VerificationDrawer({
               <div className="mt-5 flex items-center justify-between">
                 <VerdictBadge verdict={item.verdict} size="md" />
                 <p className="text-right">
-                  <span className="block text-[12px] text-muted">Confidence</span>
-                  <span className="text-xl font-semibold text-ink">
+                  <span className="block font-mono text-[11px] tracking-[0.1em] text-nb-muted uppercase">
+                    Confidence
+                  </span>
+                  <span className="font-display text-[1.75rem] leading-none font-extrabold text-nb-black">
                     {item.confidence.toFixed(1)}%
                   </span>
                 </p>
               </div>
 
-              <dl className="mt-5 divide-y divide-line/70 rounded-2xl bg-canvas/70 px-4 text-[13px] ring-1 ring-line/60">
+              <dl className="mt-6 divide-y-2 divide-nb-black border-[3px] border-nb-black bg-nb-surface px-4 text-[13px] shadow-nb-sm">
                 <Row label="SHA-256" value={item.sha256} mono copy />
                 <Row label="Perceptual hash" value={item.perceptualHash} mono />
                 <Row label="Arkiv record" value={item.arkivRecord} mono copy />
@@ -133,28 +140,30 @@ export function VerificationDrawer({
                 <Row label="Source" value={item.source} />
               </dl>
 
-              <h3 className="mt-6 font-display text-[14px] font-medium text-ink">
+              <h3 className="mt-8 font-mono text-[12px] font-normal tracking-[0.15em] text-nb-black uppercase">
                 Integrity history
               </h3>
-              <ol className="relative mt-3 space-y-4 border-l border-line pl-5">
+              <ol className="relative mt-4 space-y-5 border-l-[3px] border-nb-black pl-6">
                 {item.history.map((event, i) => {
                   const Icon = historyIcon[event.type];
                   return (
                     <li key={i} className="relative">
                       <span
                         className={cn(
-                          "absolute top-0.5 -left-[31px] grid size-5 place-items-center rounded-full bg-white ring-1",
+                          "absolute top-0 -left-[38px] grid size-6 place-items-center border-2 border-nb-black text-nb-black",
                           event.type === "tamper-detected"
-                            ? "text-verdict-tampered ring-rose-200"
+                            ? "bg-nb-pink"
                             : event.type === "lookup-miss"
-                              ? "text-amber-600 ring-amber-200"
-                              : "text-brand-teal ring-cyan-200",
+                              ? "bg-nb-orange"
+                              : "bg-nb-green",
                         )}
                       >
-                        <Icon className="size-3" />
+                        <Icon className="size-3.5" strokeWidth={2.5} />
                       </span>
-                      <p className="text-[13px] font-medium text-ink">{event.label}</p>
-                      <p className="text-[12px] text-muted">
+                      <p className="font-heading text-[15px] font-bold text-nb-black">
+                        {event.label}
+                      </p>
+                      <p className="font-mono text-[11px] text-nb-muted">
                         {dateFmt.format(new Date(event.at))} UTC · {timeAgo(event.at)}
                       </p>
                     </li>
@@ -190,10 +199,12 @@ function Row({
 
   return (
     <div className="flex items-center justify-between gap-4 py-2.5">
-      <dt className="shrink-0 text-muted">{label}</dt>
+      <dt className="shrink-0 font-mono text-[11px] tracking-[0.05em] text-nb-muted uppercase">
+        {label}
+      </dt>
       <dd
         className={cn(
-          "flex min-w-0 items-center gap-1.5 text-right text-ink",
+          "flex min-w-0 items-center gap-1.5 text-right font-medium text-nb-black",
           mono && "font-mono text-[12px]",
         )}
       >
@@ -205,12 +216,12 @@ function Row({
             type="button"
             onClick={() => navigator.clipboard?.writeText(value).then(() => setCopied(true))}
             aria-label={`Copy ${label}`}
-            className="shrink-0 text-muted hover:text-ink"
+            className="grid size-6 shrink-0 place-items-center border-2 border-nb-black bg-nb-surface text-nb-black transition-colors hover:bg-nb-yellow"
           >
             {copied ? (
-              <CircleCheck className="size-3.5 text-brand-teal" />
+              <CircleCheck className="size-3.5" strokeWidth={2.5} />
             ) : (
-              <Copy className="size-3.5" />
+              <Copy className="size-3" strokeWidth={2.5} />
             )}
           </button>
         )}

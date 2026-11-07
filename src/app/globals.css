@@ -4,49 +4,50 @@
 /* ===========================================================================
  * UnMorph — Neubrutalism design system
  *
- * Reference: https://neubrutalism.com (palette, border scale, shadow scale,
- * type stack and interaction states all follow that spec).
+ * Reference: https://neubrutalism.com — every token below is copied from that
+ * site's :root (palette, border scale, shadow scale, type stack) and every
+ * interaction state from its .btn / .card / .badge / .section-label rules.
  *
  * Non-negotiables:
  *   1. border-radius is always 0
- *   2. every structural element has a solid black border (2/3/4px)
- *   3. shadows are hard offsets with 0 blur, solid black
- *   4. hover lifts (-2px,-2px + bigger shadow), active presses (3px,3px + no shadow)
- *   5. no gradients, no blur, no translucency
+ *   2. structural elements carry a solid black border (2px thin / 3px / 4px thick)
+ *   3. shadows are hard offsets with 0 blur, solid black (3 / 5 / 8 / 12px)
+ *   4. hover lifts (-2px,-2px + bigger shadow), active presses (+3px,+3px, no shadow)
+ *   5. flat fills only — no gradients, no blur, no glass
+ *   6. Syne 800 is reserved for display moments (hero, wordmark, stats);
+ *      headings are Space Grotesk 700, body Inter 400, technical strings Space Mono
  * ======================================================================== */
 @theme {
-  /* ---- palette ---------------------------------------------------------- */
-  --color-nb-bg: #fffdf5; /* off-white canvas — never pure white */
-  --color-nb-surface: #ffffff; /* raised card surfaces */
-  --color-nb-black: #000000;
-  --color-nb-yellow: #ffd23f; /* primary accent */
-  --color-nb-pink: #ff6b6b; /* danger / tampered */
-  --color-nb-blue: #74b9ff; /* focus / info */
-  --color-nb-green: #88d498; /* success / authentic */
-  --color-nb-orange: #ffa552; /* warning / unregistered */
-  --color-nb-lavender: #b8a9fa; /* secondary accent */
-  --color-nb-muted: #5c5c54; /* secondary text on off-white (7.2:1) */
+  /* ---- palette (neubrutalism.com :root) ---------------------------------- */
+  --color-nb-bg: #fffdf5; /* --bg: off-white canvas, never pure white */
+  --color-nb-bg-warm: #f5f0e8; /* --bg-warm / --surface-2: card header strips */
+  --color-nb-surface: #ffffff; /* --surface: raised cards */
+  --color-nb-black: #000000; /* --ink */
+  --color-nb-white: #ffffff;
 
-  /* ---- semantic aliases ------------------------------------------------- */
-  --color-background: #fffdf5;
-  --color-foreground: #000000;
-  --color-surface: #ffffff;
-  --color-border: #000000;
-  --color-accent: #ffd23f;
-  --color-accent-foreground: #000000;
-  --color-destructive: #ff6b6b;
-  --color-success: #88d498;
-  --color-warning: #ffa552;
-  --color-info: #74b9ff;
+  --color-nb-yellow: #ffd23f;
+  --color-nb-yellow-light: #fff3c4;
+  --color-nb-pink: #ff6b6b;
+  --color-nb-pink-light: #ffe0e0;
+  --color-nb-blue: #74b9ff;
+  --color-nb-blue-light: #e3f2fd;
+  --color-nb-green: #88d498;
+  --color-nb-green-light: #e8f5e9;
+  --color-nb-orange: #ffa552;
+  --color-nb-orange-light: #fff0e0;
+  --color-nb-lavender: #b8a9fa; /* --purple */
+  --color-nb-lavender-light: #f0ecff;
+  --color-nb-cyan: #7fdbda;
+  --color-nb-red: #ff4444;
 
-  /* ---- app vocabulary (used across existing components) ----------------- */
-  --color-ink: #000000;
-  --color-ink-soft: #1a1a1a;
-  --color-muted: #5c5c54;
-  --color-line: #000000;
-  --color-canvas: #fffdf5;
+  /* secondary text on the off-white canvas (7.2:1) */
+  --color-nb-muted: #5c5c54;
 
-  /* ---- verdict colours -------------------------------------------------- */
+  /* code blocks (.code-block on the reference) */
+  --color-nb-code: #1a1a2e;
+  --color-nb-code-fg: #e0e0e0;
+
+  /* ---- verdicts: status is never colour-alone (icon + label + fill) ----- */
   --color-verdict-authentic: #88d498;
   --color-verdict-unregistered: #ffa552;
   --color-verdict-tampered: #ff6b6b;
@@ -57,16 +58,31 @@
   --shadow-nb-hover: 7px 7px 0 0 #000000;
   --shadow-nb-lg: 8px 8px 0 0 #000000;
   --shadow-nb-xl: 12px 12px 0 0 #000000;
+  /* the same offsets in canvas colour, for black surfaces */
+  --shadow-nb-inverse-sm: 3px 3px 0 0 #fffdf5;
+  --shadow-nb-inverse: 5px 5px 0 0 #fffdf5;
+  /* coloured offset for black cards (.btn-demo-dark) */
+  --shadow-nb-pink: 5px 5px 0 0 #ff6b6b;
+  --shadow-nb-pink-lg: 8px 8px 0 0 #ff6b6b;
+  /* sticky nav once scrolled (.nav.is-scrolled) */
+  --shadow-nb-bar: 0 4px 0 0 #000000;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --animate-scan: scan 3.2s var(--ease-out-quint) infinite;
-  --animate-pulse-ring: pulse-ring 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+  --animate-scan: scan 2.4s steps(24, end) infinite;
   --animate-float: float 7s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
   --animate-marquee-y: marquee-y 22s linear infinite;
   --animate-dash: dash 2.4s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
 
   @keyframes marquee-y {
     from {
@@ -83,42 +99,13 @@
     }
   }
 
+  /* Hard-edged scanner bar (10% tall): steps() so it ticks rather than glides. */
   @keyframes scan {
-    0% {
-      transform: translateY(-10%);
-      opacity: 0;
+    from {
+      transform: translateY(-100%);
     }
-    12% {
-      opacity: 1;
-    }
-    88% {
-      opacity: 1;
-    }
-    100% {
+    to {
       transform: translateY(1000%);
-      opacity: 0;
-    }
-  }
-
-  @keyframes pulse-ring {
-    0% {
-      transform: scale(0.8);
-      opacity: 0.7;
-    }
-    80%,
-    100% {
-      transform: scale(2.2);
-      opacity: 0;
-    }
-  }
-
-  @keyframes shimmer {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.4;
     }
   }
 
@@ -128,7 +115,7 @@
       transform: translate3d(0, 0, 0);
     }
     50% {
-      transform: translate3d(0, -10px, 0);
+      transform: translate3d(0, -8px, 0);
     }
   }
 }
@@ -155,22 +142,26 @@
 
   body {
     @apply bg-nb-bg font-sans text-nb-black antialiased;
+    line-height: 1.6;
   }
 
-  h1,
-  h2,
-  h3,
-  h4 {
+  /* Display face: hero titles only. */
+  h1 {
     @apply font-display text-balance;
     font-weight: 800;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
   }
 
+  /* Heading face: everything structural. Sentence case — loud in scale, not letterform. */
+  h2,
+  h3,
+  h4,
   h5,
   h6 {
-    @apply font-heading;
+    @apply font-heading text-balance;
     font-weight: 700;
+    letter-spacing: -0.02em;
   }
 
   ::selection {
@@ -180,6 +171,11 @@
 
   [id] {
     scroll-margin-top: 6rem;
+  }
+
+  /* Chunky black scrollbar, like the reference. */
+  html {
+    scrollbar-color: var(--color-nb-black) var(--color-nb-surface);
   }
 }
 
@@ -202,12 +198,13 @@
  * Utilities
  * ------------------------------------------------------------------------- */
 
-/** The signature tactile press. Apply to anything clickable. */
+/** The signature tactile press (.btn-demo-*). Apply to anything clickable. */
 @utility nb-press {
   box-shadow: var(--shadow-nb);
   transition:
     transform 0.1s ease,
-    box-shadow 0.1s ease;
+    box-shadow 0.1s ease,
+    background-color 0.1s ease;
 
   &:hover {
     transform: translate(-2px, -2px);
@@ -220,12 +217,13 @@
   }
 }
 
-/** Small variant for chips / inline actions. */
+/** Small variant (.btn-small) for chips / inline actions. */
 @utility nb-press-sm {
   box-shadow: var(--shadow-nb-sm);
   transition:
     transform 0.1s ease,
-    box-shadow 0.1s ease;
+    box-shadow 0.1s ease,
+    background-color 0.1s ease;
 
   &:hover {
     transform: translate(-2px, -2px);
@@ -238,20 +236,43 @@
   }
 }
 
-/** Flat bordered panel — the default surface in this system. */
-@utility nb-card {
+/** .section-label — mono, tracked caps, thin border, small shadow. */
+@utility nb-label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.4rem 0.8rem;
+  border: 2px solid var(--color-nb-black);
   background: var(--color-nb-surface);
+  color: var(--color-nb-black);
+  box-shadow: var(--shadow-nb-sm);
+}
+
+/** .code-block — midnight panel for hashes, JSON and snippets. */
+@utility nb-code {
   border: 3px solid var(--color-nb-black);
+  background: var(--color-nb-code);
+  color: var(--color-nb-code-fg);
+  font-family: var(--font-mono);
   box-shadow: var(--shadow-nb);
 }
 
-/** Dark terminal block for raw hashes / JSON / keys. */
-@utility nb-terminal {
-  border: 3px solid var(--color-nb-black);
-  background: var(--color-nb-black);
-  color: var(--color-nb-green);
-  font-family: var(--font-mono);
-  box-shadow: var(--shadow-nb);
+/** Tamper-region marker: pink box, black ring, hazard hatching — no translucent wash. */
+@utility nb-tamper {
+  border: 3px solid var(--color-nb-pink);
+  box-shadow:
+    0 0 0 2px var(--color-nb-black),
+    inset 0 0 0 2px var(--color-nb-black);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgb(255 107 107 / 0.55) 0,
+    rgb(255 107 107 / 0.55) 3px,
+    transparent 3px,
+    transparent 9px
+  );
 }
 
 /** Hard-edged grid paper texture. */
@@ -262,30 +283,10 @@
   background-size: 56px 56px;
 }
 
-@utility bg-grid-dark {
-  background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.12) 2px, transparent 2px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.12) 2px, transparent 2px);
-  background-size: 48px 48px;
-}
-
-/** Diagonal hazard stripes — used for warning strips and empty states. */
-@utility bg-stripes {
-  background-image: repeating-linear-gradient(
-    45deg,
-    var(--color-nb-black) 0,
-    var(--color-nb-black) 2px,
-    transparent 2px,
-    transparent 10px
-  );
-}
-
-@utility mask-fade-y {
-  mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
-}
-
-@utility shimmer-text {
-  animation: var(--animate-shimmer);
+/** Dot-matrix texture used behind the reference's demo canvases. */
+@utility bg-dots {
+  background-image: radial-gradient(rgb(0 0 0 / 0.18) 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
 }
 
 @media (prefers-reduced-motion: reduce) {

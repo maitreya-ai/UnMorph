@@ -25,12 +25,13 @@ const rails = [
 
 export function InfraStrip() {
   return (
-    <section aria-labelledby="infra-strip-title" className="relative px-5 pt-6 pb-20 sm:px-6">
+    <section
+      aria-labelledby="infra-strip-title"
+      className="relative border-b-4 border-nb-black bg-nb-bg px-5 py-16 sm:px-6 sm:py-20"
+    >
       <Reveal className="mx-auto max-w-5xl">
         <p id="infra-strip-title" className="flex justify-center">
-          <span className="border-[3px] border-nb-black bg-nb-black px-3 py-1 font-heading text-[11.5px] font-bold tracking-[0.18em] text-nb-bg uppercase">
-            Integrity anchored on open infrastructure
-          </span>
+          <span className="nb-label">Integrity anchored on open infrastructure</span>
         </p>
         <ul className="mt-8 grid border-[3px] border-nb-black bg-nb-surface shadow-nb sm:grid-cols-3">
           {rails.map(({ name, icon: Icon, role, tone }, i) => (
@@ -50,10 +51,10 @@ export function InfraStrip() {
                 <Icon className="size-5" strokeWidth={2.5} />
               </span>
               <span>
-                <span className="block font-display text-lg font-extrabold uppercase tracking-tight text-nb-black">
+                <span className="block font-heading text-xl font-bold tracking-tight text-nb-black">
                   {name}
                 </span>
-                <span className="block text-[13px] leading-snug text-nb-muted">{role}</span>
+                <span className="block text-[14px] leading-snug text-nb-black/80">{role}</span>
               </span>
             </li>
           ))}

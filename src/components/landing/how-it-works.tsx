@@ -63,10 +63,13 @@ export function HowItWorks() {
   });
 
   return (
-    <section id="how-it-works" className="relative px-5 py-24 sm:px-6 sm:py-32">
+    <section
+      id="how-it-works"
+      className="relative border-b-4 border-nb-black bg-nb-blue-light px-5 py-24 sm:px-6 sm:py-32"
+    >
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          eyebrow="How it works"
+          eyebrow="02 — How it works"
           title="From capture to proof in three steps."
           description="UnMorph turns an image into evidence: a fingerprint only the original can match, anchored where no single party can rewrite it."
         />
@@ -76,7 +79,7 @@ export function HowItWorks() {
           <div ref={stepsRef} className="relative">
             <div
               aria-hidden
-              className="absolute top-2 bottom-2 left-[15px] hidden w-[3px] bg-nb-black/15 lg:block"
+              className="absolute top-2 bottom-2 left-[15px] hidden w-[3px] bg-nb-white lg:block"
             >
               <motion.div
                 style={{ scaleY: rail }}
@@ -105,16 +108,19 @@ export function HowItWorks() {
                       active === i ? "lg:opacity-100" : "lg:opacity-35",
                     )}
                   >
-                    <p className="inline-block border-[2px] border-nb-black bg-nb-black px-2.5 py-1 font-heading text-[11px] font-bold tracking-[0.16em] text-nb-bg uppercase">
-                      {step.kicker}
-                    </p>
-                    <h3 className="mt-4 font-display text-[1.65rem] leading-tight font-extrabold tracking-[-0.03em] text-nb-black uppercase">
+                    <p className="nb-label bg-nb-black text-nb-white shadow-none">{step.kicker}</p>
+                    <h3 className="mt-5 text-[clamp(1.6rem,3vw,2rem)] leading-tight text-nb-black">
                       {step.title}
                     </h3>
-                    <p className="mt-4 leading-relaxed text-nb-muted">{step.body}</p>
+                    <p className="mt-4 text-[1.05rem] leading-relaxed text-nb-black/85">
+                      {step.body}
+                    </p>
                     <ul className="mt-6 space-y-2.5">
                       {step.points.map((point) => (
-                        <li key={point} className="flex items-center gap-3 text-[15px] text-nb-black">
+                        <li
+                          key={point}
+                          className="flex items-center gap-3 text-[15px] text-nb-black"
+                        >
                           <span className="grid size-6 shrink-0 place-items-center border-[2px] border-nb-black bg-nb-green text-nb-black">
                             <Check className="size-3" strokeWidth={3} />
                           </span>
@@ -180,14 +186,14 @@ function RegisterVisual() {
     <div className="relative flex h-full flex-col gap-4">
       <div className="relative min-h-0 flex-1 overflow-hidden border-[3px] border-nb-black">
         <Landscape variant="dawn" />
-        <div className="absolute top-3 left-3 flex items-center gap-2 border-[2px] border-nb-black bg-nb-surface py-1 pr-3 pl-1 font-heading text-[11px] font-bold uppercase text-nb-black shadow-nb-sm">
+        <div className="absolute top-3 left-3 flex items-center gap-2 border-2 border-nb-black bg-nb-surface py-1 pr-3 pl-1 font-mono text-[11px] tracking-[0.05em] text-nb-black uppercase shadow-nb-sm">
           <span className="grid size-5 place-items-center bg-nb-black text-nb-yellow">
             <ScanFace className="size-3" />
           </span>
           Verified human · World ID
         </div>
       </div>
-      <div className="grid grid-cols-[auto_1fr] items-center gap-4 border-[3px] border-nb-black bg-nb-black p-4 text-nb-bg">
+      <div className="grid grid-cols-[auto_1fr] items-center gap-4 p-4 nb-code">
         <div className="grid grid-cols-8 gap-[3px]" aria-label="Perceptual hash bit grid">
           {PHASH_BITS.map((on, i) => (
             <motion.span
@@ -195,12 +201,12 @@ function RegisterVisual() {
               initial={{ opacity: 0, scale: 0.4 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 + i * 0.008, duration: 0.3 }}
-              className={cn("size-2.5", on ? "bg-nb-yellow" : "bg-nb-bg/15")}
+              className={cn("size-2.5", on ? "bg-nb-yellow" : "bg-nb-white/15")}
             />
           ))}
         </div>
         <div className="min-w-0">
-          <p className="flex items-center gap-1.5 font-heading text-[11px] font-bold uppercase tracking-wide text-nb-yellow">
+          <p className="flex items-center gap-1.5 font-mono text-[11px] tracking-[0.1em] text-nb-yellow uppercase">
             <FingerprintPattern className="size-3.5" /> SHA-256
           </p>
           <p className="mt-1 font-mono text-[11px] leading-relaxed break-all text-nb-green">
@@ -272,7 +278,7 @@ function AnchorVisual() {
             >
               <Icon className={cn("size-5", layer.accent)} strokeWidth={2.5} />
               <div>
-                <p className="font-display text-[15px] font-extrabold uppercase">{layer.name}</p>
+                <p className="font-heading text-[17px] font-bold">{layer.name}</p>
                 <p className="mt-0.5 font-mono text-[11px] opacity-70">{layer.detail}</p>
               </div>
             </motion.div>
@@ -283,20 +289,20 @@ function AnchorVisual() {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6, ease: EASE }}
-        className="relative overflow-hidden border-[3px] border-nb-black bg-nb-black p-4 font-mono text-[11px] leading-relaxed text-nb-green shadow-nb"
+        className="relative overflow-hidden p-4 nb-code text-[11px] leading-relaxed text-nb-green"
       >
-        <span className="text-nb-bg/45">{"// arkiv record"}</span>
+        <span className="text-nb-code-fg/45">{"// arkiv record"}</span>
         {"\n{"}
         {"\n  "}
-        <span className="text-nb-yellow">&quot;sha256&quot;</span>: &quot;e3b0c4…7b855&quot;,
+        <span className="text-nb-cyan">&quot;sha256&quot;</span>: &quot;e3b0c4…7b855&quot;,
         {"\n  "}
-        <span className="text-nb-yellow">&quot;phash&quot;</span>: &quot;9f2c4ba1d0e7a71e&quot;,
+        <span className="text-nb-cyan">&quot;phash&quot;</span>: &quot;9f2c4ba1d0e7a71e&quot;,
         {"\n  "}
-        <span className="text-nb-yellow">&quot;owner&quot;</span>: &quot;0x7a3c…e91f&quot;,
+        <span className="text-nb-cyan">&quot;owner&quot;</span>: &quot;0x7a3c…e91f&quot;,
         {"\n  "}
-        <span className="text-nb-yellow">&quot;storage&quot;</span>: &quot;0g://0x4be1…09fa&quot;,
+        <span className="text-nb-cyan">&quot;storage&quot;</span>: &quot;0g://0x4be1…09fa&quot;,
         {"\n  "}
-        <span className="text-nb-yellow">&quot;human&quot;</span>: true
+        <span className="text-nb-cyan">&quot;human&quot;</span>: true
         {"\n}"}
       </motion.pre>
     </div>
@@ -309,7 +315,7 @@ function VerifyVisual() {
       <div className="grid min-h-0 flex-1 grid-cols-2 gap-3">
         <figure className="relative overflow-hidden border-[3px] border-nb-black">
           <Landscape variant="glacier" />
-          <figcaption className="absolute top-2.5 left-2.5 border-[2px] border-nb-black bg-nb-green px-2.5 py-1 font-heading text-[10.5px] font-bold uppercase text-nb-black">
+          <figcaption className="absolute top-2.5 left-2.5 border-2 border-nb-black bg-nb-green px-2 py-0.5 font-mono text-[10.5px] tracking-[0.05em] text-nb-black uppercase shadow-nb-sm">
             Registered
           </figcaption>
         </figure>
@@ -321,7 +327,7 @@ function VerifyVisual() {
               initial={{ opacity: 0, scale: 1.3 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.4 + i * 0.2, duration: 0.5, ease: EASE }}
-              className="absolute rounded-md border-2 border-verdict-tampered bg-verdict-tampered/15"
+              className="absolute nb-tamper"
               style={{
                 left: `${r.left}%`,
                 top: `${r.top}%`,
@@ -330,7 +336,7 @@ function VerifyVisual() {
               }}
             />
           ))}
-          <figcaption className="absolute top-2.5 left-2.5 rounded-full bg-white/85 px-2.5 py-1 text-[10.5px] font-semibold text-ink backdrop-blur">
+          <figcaption className="absolute top-2.5 left-2.5 border-2 border-nb-black bg-nb-pink px-2 py-0.5 font-mono text-[10.5px] tracking-[0.05em] text-nb-black uppercase shadow-nb-sm">
             Submitted
           </figcaption>
         </figure>
@@ -340,28 +346,32 @@ function VerifyVisual() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6, ease: EASE }}
-          className="flex items-center gap-3 rounded-2xl bg-white p-4 ring-1 ring-line"
+          className="flex items-center gap-3 border-[3px] border-nb-black bg-nb-surface p-4 shadow-nb-sm"
         >
-          <span className="grid size-9 place-items-center rounded-xl bg-brand-teal/10 text-brand-teal">
+          <span className="grid size-10 shrink-0 place-items-center border-2 border-nb-black bg-nb-green text-nb-black">
             <ShieldCheck className="size-4.5" />
           </span>
           <div>
-            <p className="text-[12px] text-muted">Copy A</p>
-            <p className="font-display text-[15px] font-medium text-ink">Authentic · 99.4%</p>
+            <p className="font-mono text-[11px] tracking-[0.05em] text-nb-muted uppercase">
+              Copy A
+            </p>
+            <p className="font-heading text-[15px] font-bold text-nb-black">Authentic · 99.4%</p>
           </div>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.45, duration: 0.6, ease: EASE }}
-          className="flex items-center gap-3 rounded-2xl bg-white p-4 ring-1 ring-line"
+          className="flex items-center gap-3 border-[3px] border-nb-black bg-nb-surface p-4 shadow-nb-sm"
         >
-          <span className="grid size-9 place-items-center rounded-xl bg-verdict-tampered/10 text-verdict-tampered">
+          <span className="grid size-10 shrink-0 place-items-center border-2 border-nb-black bg-nb-pink text-nb-black">
             <ShieldX className="size-4.5" />
           </span>
           <div>
-            <p className="text-[12px] text-muted">Copy B</p>
-            <p className="font-display text-[15px] font-medium text-ink">Tampered · 2 regions</p>
+            <p className="font-mono text-[11px] tracking-[0.05em] text-nb-muted uppercase">
+              Copy B
+            </p>
+            <p className="font-heading text-[15px] font-bold text-nb-black">Tampered · 2 regions</p>
           </div>
         </motion.div>
       </div>

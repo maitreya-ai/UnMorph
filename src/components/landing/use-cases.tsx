@@ -96,13 +96,13 @@ export function UseCases() {
     <section
       id="use-cases"
       ref={sectionRef}
-      className="relative"
+      className="relative border-b-4 border-nb-black bg-nb-orange-light"
       style={isDesktop && distance ? { height: `calc(100vh + ${distance}px)` } : undefined}
     >
       <div className="py-24 sm:py-32 lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col lg:justify-center lg:overflow-hidden lg:py-0">
         <div className="mx-auto w-full max-w-6xl px-5 sm:px-6">
           <SectionHeading
-            eyebrow="Use cases"
+            eyebrow="05 — Use cases"
             title="Wherever an image is evidence."
             description="From breaking news to insurance claims, UnMorph gives teams a shared, verifiable answer to one question: is this the original?"
           />
@@ -111,7 +111,7 @@ export function UseCases() {
         <motion.div
           ref={trackRef}
           style={{ x: isDesktop ? x : 0 }}
-          className="relative mt-12 flex snap-x snap-mandatory [scrollbar-width:none] gap-5 overflow-x-auto px-5 pb-4 sm:px-6 lg:snap-none lg:overflow-visible lg:px-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))] [&::-webkit-scrollbar]:hidden"
+          className="relative mt-12 flex snap-x snap-mandatory [scrollbar-width:none] gap-6 overflow-x-auto px-5 pt-1 pb-5 sm:px-6 lg:snap-none lg:overflow-visible lg:px-[max(1.5rem,calc((100vw-72rem)/2+1.5rem))] [&::-webkit-scrollbar]:hidden"
         >
           {cases.map((item, i) => (
             <UseCaseCard key={item.title} item={item} index={i} />
@@ -119,11 +119,8 @@ export function UseCases() {
         </motion.div>
 
         <div className="mx-auto mt-8 hidden w-full max-w-6xl px-6 lg:block">
-          <div className="h-px w-full bg-line">
-            <motion.div
-              style={{ scaleX: progress }}
-              className="h-px origin-left bg-gradient-to-r from-brand-teal to-brand-cyan"
-            />
+          <div className="h-4 w-full border-[3px] border-nb-black bg-nb-surface">
+            <motion.div style={{ scaleX: progress }} className="h-full origin-left bg-nb-orange" />
           </div>
         </div>
       </div>
@@ -139,25 +136,23 @@ function UseCaseCard({ item, index }: { item: UseCase; index: number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -10% 0px" }}
       transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: index * 0.06 }}
-      className="group w-[82vw] shrink-0 snap-start overflow-hidden rounded-[28px] border border-white bg-white/80 shadow-glass backdrop-blur-xl transition-shadow duration-500 hover:shadow-float sm:w-[380px] lg:w-[400px]"
+      className="group w-[82vw] shrink-0 snap-start overflow-hidden border-[3px] border-nb-black bg-nb-surface shadow-nb transition-[transform,box-shadow] duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-nb-lg sm:w-[380px] lg:w-[400px]"
     >
-      <div className="relative aspect-[16/10] overflow-hidden">
-        <div className="size-full transition-transform duration-[1.2s] ease-(--ease-out-expo) group-hover:scale-[1.06]">
+      <div className="relative aspect-[16/10] overflow-hidden border-b-[3px] border-nb-black">
+        <div className="size-full">
           <Landscape variant={item.scene} />
         </div>
-        <span className="absolute bottom-3 left-3 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-[11.5px] font-semibold text-ink shadow-glass backdrop-blur">
-          <span className={cn("size-1.5 rounded-full", tagDot[item.verdict])} />
+        <span className="absolute bottom-3 left-3 inline-flex items-center gap-2 border-2 border-nb-black bg-nb-surface px-2.5 py-1 font-mono text-[10.5px] tracking-[0.05em] text-nb-black uppercase shadow-nb-sm">
+          <span className={cn("size-2.5 border-2 border-nb-black", tagDot[item.verdict])} />
           {item.tag}
         </span>
       </div>
       <div className="p-6">
-        <span className="grid size-10 place-items-center rounded-xl bg-ink text-brand-cyan">
-          <Icon className="size-[18px]" strokeWidth={1.8} />
+        <span className="grid size-11 place-items-center border-[3px] border-nb-black bg-nb-yellow text-nb-black shadow-nb-sm">
+          <Icon className="size-5" strokeWidth={2.25} />
         </span>
-        <h3 className="mt-4 font-display text-[1.3rem] font-medium tracking-[-0.02em] text-ink">
-          {item.title}
-        </h3>
-        <p className="mt-2 text-[14.5px] leading-relaxed text-muted">{item.body}</p>
+        <h3 className="mt-5 text-[1.375rem] leading-tight text-nb-black">{item.title}</h3>
+        <p className="mt-2 text-[15px] leading-relaxed text-nb-black/80">{item.body}</p>
       </div>
     </motion.article>
   );

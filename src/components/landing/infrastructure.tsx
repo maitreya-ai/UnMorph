@@ -18,15 +18,18 @@ import { cn, truncateMiddle } from "@/lib/utils";
 
 export function Infrastructure() {
   return (
-    <section id="infrastructure" className="relative px-5 py-24 sm:px-6 sm:py-32">
+    <section
+      id="infrastructure"
+      className="relative border-b-4 border-nb-black bg-nb-lavender-light px-5 py-24 sm:px-6 sm:py-32"
+    >
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          eyebrow="Infrastructure"
+          eyebrow="04 — Infrastructure"
           title="Trust that no single party controls."
           description="UnMorph composes three open networks into one integrity layer — so proof outlives any company, server or policy change, including ours."
         />
 
-        <div className="mt-14 grid gap-5 lg:grid-cols-6">
+        <div className="mt-14 grid gap-6 lg:grid-cols-6">
           <Reveal className="lg:col-span-3">
             <SpotlightCard tone="dark" className="h-full min-h-[380px]">
               <CardHeader
@@ -114,23 +117,23 @@ function CardHeader({
     <div>
       <p
         className={cn(
-          "inline-flex items-center gap-2 rounded-full px-2.5 py-1 text-[12px] font-semibold",
-          dark ? "bg-white/[0.08] text-brand-cyan" : "bg-brand-cyan/10 text-brand-teal",
+          "inline-flex items-center gap-2 border-2 border-nb-black px-2.5 py-1 font-mono text-[11px] tracking-[0.1em] uppercase",
+          dark ? "bg-nb-yellow text-nb-black" : "bg-nb-lavender text-nb-black shadow-nb-sm",
         )}
       >
-        <Icon className="size-3.5" strokeWidth={2} />
+        <Icon className="size-3.5" strokeWidth={2.25} />
         {name}
       </p>
       <h3
-        className={cn(
-          "mt-4 font-display text-[1.4rem] leading-tight font-medium tracking-[-0.025em]",
-          dark ? "text-white" : "text-ink",
-        )}
+        className={cn("mt-5 text-[1.5rem] leading-tight", dark ? "text-nb-white" : "text-nb-black")}
       >
         {title}
       </h3>
       <p
-        className={cn("mt-2 text-[14.5px] leading-relaxed", dark ? "text-white/60" : "text-muted")}
+        className={cn(
+          "mt-2 text-[15px] leading-relaxed",
+          dark ? "text-nb-white/80" : "text-nb-black/80",
+        )}
       >
         {body}
       </p>
@@ -145,19 +148,19 @@ function PersonhoodOrb() {
         <motion.span
           key={i}
           aria-hidden
-          className="absolute size-24 rounded-full border border-brand-cyan/40"
-          animate={{ scale: [1, 2.3], opacity: [0.6, 0] }}
-          transition={{ duration: 3.6, repeat: Infinity, ease: "easeOut", delay: i * 1.2 }}
+          className="absolute size-20 border-[3px] border-nb-yellow"
+          animate={{ scale: [1, 2.4], opacity: [1, 0] }}
+          transition={{ duration: 3.6, repeat: Infinity, ease: "linear", delay: i * 1.2 }}
         />
       ))}
-      <div className="relative grid size-20 place-items-center rounded-full bg-gradient-to-br from-brand-cyan via-brand-aqua to-brand-teal shadow-[0_0_60px_-6px_rgb(6_214_255/0.7)]">
-        <ScanFace className="size-8 text-ink" strokeWidth={1.6} />
+      <div className="relative grid size-20 place-items-center border-[3px] border-nb-white bg-nb-yellow text-nb-black shadow-nb-inverse">
+        <ScanFace className="size-9" strokeWidth={2} />
       </div>
-      <span className="absolute top-3 left-[8%] inline-flex items-center gap-1.5 rounded-full bg-white/[0.08] px-3 py-1.5 text-[12px] text-white/80 ring-1 ring-white/10 backdrop-blur">
-        <CircleCheck className="size-3.5 text-brand-cyan" /> Unique human
+      <span className="absolute top-2 left-[6%] inline-flex items-center gap-1.5 border-2 border-nb-black bg-nb-surface px-2.5 py-1 font-mono text-[11px] tracking-[0.05em] text-nb-black uppercase">
+        <CircleCheck className="size-3.5" /> Unique human
       </span>
-      <span className="absolute right-[8%] bottom-3 inline-flex items-center gap-1.5 rounded-full bg-white/[0.08] px-3 py-1.5 text-[12px] text-white/80 ring-1 ring-white/10 backdrop-blur">
-        <CircleCheck className="size-3.5 text-brand-cyan" /> Zero personal data
+      <span className="absolute right-[6%] bottom-2 inline-flex items-center gap-1.5 border-2 border-nb-black bg-nb-green px-2.5 py-1 font-mono text-[11px] tracking-[0.05em] text-nb-black uppercase">
+        <CircleCheck className="size-3.5" /> Zero personal data
       </span>
     </div>
   );
@@ -173,18 +176,23 @@ function RecordTicker() {
   const rows = recentVerifications.filter((v) => v.arkivRecord);
   const loop = [...rows, ...rows];
   return (
-    <div className="relative mt-6 h-44 overflow-hidden mask-fade-y" aria-hidden>
+    <div
+      className="relative mt-6 h-44 overflow-hidden border-[3px] border-nb-black bg-nb-bg-warm p-2"
+      aria-hidden
+    >
       <ul className="animate-marquee-y space-y-2 group-hover:[animation-play-state:paused]">
         {loop.map((row, i) => (
           <li
             key={`${row.id}-${i}`}
-            className="flex items-center gap-3 rounded-xl border border-line/70 bg-white px-3 py-2.5 text-[12px]"
+            className="flex items-center gap-3 border-2 border-nb-black bg-nb-surface px-3 py-2 text-[12px]"
           >
-            <span className={cn("size-2 rounded-full", verdictDot[row.verdict])} />
-            <span className="font-mono text-ink/80">
+            <span
+              className={cn("size-3 shrink-0 border-2 border-nb-black", verdictDot[row.verdict])}
+            />
+            <span className="font-mono text-nb-black">
               {truncateMiddle(row.arkivRecord ?? "", 10, 4)}
             </span>
-            <span className="ml-auto truncate text-muted">{row.fileName}</span>
+            <span className="ml-auto truncate text-nb-muted">{row.fileName}</span>
           </li>
         ))}
       </ul>
@@ -225,6 +233,7 @@ const EDGES = [
   [4, 8],
 ] as const;
 
+/** Storage mesh: square nodes, 2px black links, pink packets on a few routes. */
 function NodeMesh() {
   return (
     <svg viewBox="0 0 290 180" className="mt-5 h-40 w-full" aria-hidden>
@@ -235,8 +244,8 @@ function NodeMesh() {
             y1={NODES[a][1]}
             x2={NODES[b][0]}
             y2={NODES[b][1]}
-            stroke="#E5E7EB"
-            strokeWidth="1.2"
+            stroke="#000000"
+            strokeWidth="2"
           />
           {i % 3 === 0 && (
             <line
@@ -244,29 +253,31 @@ function NodeMesh() {
               y1={NODES[a][1]}
               x2={NODES[b][0]}
               y2={NODES[b][1]}
-              stroke="#00B3E6"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-              strokeDasharray="6 34"
+              stroke="#FF6B6B"
+              strokeWidth="5"
+              strokeDasharray="8 32"
               className="animate-dash"
               style={{ animationDelay: `${i * 0.2}s` }}
             />
           )}
         </g>
       ))}
-      {NODES.map(([x, y], i) => (
-        <g key={i}>
-          <circle
-            cx={x}
-            cy={y}
-            r={i % 4 === 0 ? 7 : 5}
-            fill="#FFFFFF"
-            stroke={i % 4 === 0 ? "#0E7490" : "#9CA3AF"}
-            strokeWidth="1.5"
+      {NODES.map(([x, y], i) => {
+        const key = i % 4 === 0;
+        const r = key ? 8 : 5.5;
+        return (
+          <rect
+            key={i}
+            x={x - r}
+            y={y - r}
+            width={r * 2}
+            height={r * 2}
+            fill={key ? "#FFD23F" : "#FFFFFF"}
+            stroke="#000000"
+            strokeWidth="2.5"
           />
-          {i % 4 === 0 && <circle cx={x} cy={y} r="2.5" fill="#06D6FF" />}
-        </g>
-      ))}
+        );
+      })}
     </svg>
   );
 }
@@ -276,35 +287,47 @@ const SHA_A = seededHex(502, 40);
 
 function HashCompare() {
   return (
-    <div className="mt-6 space-y-2.5 font-mono text-[11px]">
-      <div className="rounded-xl bg-canvas p-3 ring-1 ring-line/70">
-        <p className="flex items-center justify-between font-sans text-[10.5px] font-medium text-muted">
-          Perceptual <span className="text-brand-teal">survives edits</span>
+    <div className="mt-6 space-y-3 font-mono text-[11px]">
+      <div className="border-2 border-nb-black bg-nb-bg-warm p-3">
+        <p className="flex items-center justify-between text-[10.5px] tracking-[0.1em] text-nb-black uppercase">
+          Perceptual
+          <span className="border-2 border-nb-black bg-nb-green px-1.5 tracking-[0.05em]">
+            survives edits
+          </span>
         </p>
-        <p className="mt-1 text-ink/85">{PH_A}</p>
+        <p className="mt-1.5 text-nb-black">{PH_A}</p>
       </div>
-      <div className="rounded-xl bg-canvas p-3 ring-1 ring-line/70">
-        <p className="flex items-center justify-between font-sans text-[10.5px] font-medium text-muted">
-          SHA-256 <span className="text-brand-teal">exact bytes</span>
+      <div className="border-2 border-nb-black bg-nb-bg-warm p-3">
+        <p className="flex items-center justify-between text-[10.5px] tracking-[0.1em] text-nb-black uppercase">
+          SHA-256
+          <span className="border-2 border-nb-black bg-nb-blue px-1.5 tracking-[0.05em]">
+            exact bytes
+          </span>
         </p>
-        <p className="mt-1 truncate text-ink/85">{SHA_A}</p>
+        <p className="mt-1.5 truncate text-nb-black">{SHA_A}</p>
       </div>
     </div>
   );
 }
 
+/** `.code-block`: midnight panel with the reference's syntax colours. */
 function CodeSnippet() {
   return (
-    <pre className="mt-6 overflow-x-auto rounded-xl bg-ink p-4 font-mono text-[11.5px] leading-relaxed text-white/80">
-      <span className="text-brand-cyan">const</span> report ={" "}
-      <span className="text-brand-cyan">await</span> unmorph
-      {"\n  "}.verify(file)
-      {"\n\n"}report.verdict{"     "}
-      <span className="text-white/40">{'// "authentic"'}</span>
-      {"\n"}report.confidence{"  "}
-      <span className="text-white/40">{"// 0.994"}</span>
-      {"\n"}report.record{"      "}
-      <span className="text-white/40">{"// ark_7f3a…"}</span>
+    <pre className="mt-6 overflow-x-auto p-4 nb-code text-[11.5px] leading-relaxed">
+      <span className="text-nb-pink">const</span> report ={" "}
+      <span className="text-nb-pink">await</span> unmorph
+      {"\n  "}.<span className="text-nb-cyan">verify</span>(file)
+      {"\n\n"}report.<span className="text-nb-cyan">verdict</span>
+      {"     "}
+      <span className="text-nb-code-fg/45">{"// "}</span>
+      <span className="text-nb-green">&quot;authentic&quot;</span>
+      {"\n"}report.<span className="text-nb-cyan">confidence</span>
+      {"  "}
+      <span className="text-nb-code-fg/45">{"// "}</span>
+      <span className="text-nb-yellow">0.994</span>
+      {"\n"}report.<span className="text-nb-cyan">record</span>
+      {"      "}
+      <span className="text-nb-code-fg/45">{"// ark_7f3a…"}</span>
     </pre>
   );
 }

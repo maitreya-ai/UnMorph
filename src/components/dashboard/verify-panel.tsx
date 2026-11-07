@@ -253,7 +253,14 @@ export function VerifyPanel({
       // Uploaded files get a stable placeholder scene for their table thumbnail.
       const final = subject.previewUrl ? { ...subject, scene: sceneForHash(hash) } : subject;
       const record = buildVerification(final, hash, result, sequence);
-      setRun({ phase: "done", subject: final, hash, result, record, apiResult: apiResult ?? undefined });
+      setRun({
+        phase: "done",
+        subject: final,
+        hash,
+        result,
+        record,
+        apiResult: apiResult ?? undefined,
+      });
       onComplete(record);
     },
     [address, createIncidentOnChain, isConnected, onComplete, selectedMode, sequence],
@@ -301,13 +308,11 @@ export function VerifyPanel({
   };
 
   return (
-    <div className="rounded-3xl border border-line/80 bg-white p-5 sm:p-6">
+    <div className="border-[3px] border-nb-black bg-nb-surface p-5 shadow-nb sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 className="font-display text-[17px] font-medium tracking-tight text-ink">
-            Verify an image
-          </h2>
-          <p className="mt-0.5 text-[13px] text-muted">
+          <h2 className="text-[1.35rem] leading-tight text-nb-black">Verify an image</h2>
+          <p className="mt-0.5 text-[13px] text-nb-muted">
             The SHA-256 fingerprint is computed in your browser. Registry & analysis results are
             simulated.
           </p>
@@ -316,7 +321,7 @@ export function VerifyPanel({
           <button
             type="button"
             onClick={reset}
-            className="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-[13px] font-medium text-muted ring-1 ring-line transition-colors hover:bg-canvas hover:text-ink"
+            className="inline-flex nb-press-sm items-center gap-1.5 border-2 border-nb-black bg-nb-surface px-3 py-1.5 font-heading text-[13px] font-bold text-nb-black"
           >
             <RotateCcw className="size-3.5" /> Verify another
           </button>
@@ -337,16 +342,18 @@ export function VerifyPanel({
       <div className="mt-5">
         {/* Mode selector & wallet banner */}
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-1.5">
-            <span className="text-[12px] font-medium text-muted">Mode:</span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-mono text-[11px] tracking-[0.1em] text-nb-muted uppercase">
+              Mode
+            </span>
             <button
               type="button"
               onClick={() => setSelectedMode("existing")}
               className={cn(
-                "rounded-lg px-2.5 py-1 text-[12px] font-medium transition",
+                "border-2 px-2.5 py-1 font-heading text-[13px] font-bold whitespace-nowrap transition-colors",
                 selectedMode === "existing"
-                  ? "bg-ink text-white"
-                  : "border border-line bg-canvas text-muted hover:text-ink",
+                  ? "border-nb-black bg-nb-black text-nb-white"
+                  : "border-nb-black bg-nb-surface text-nb-black hover:bg-nb-yellow-light",
               )}
             >
               Existing image check
@@ -355,10 +362,10 @@ export function VerifyPanel({
               type="button"
               onClick={() => setSelectedMode("new")}
               className={cn(
-                "rounded-lg px-2.5 py-1 text-[12px] font-medium transition",
+                "border-2 px-2.5 py-1 font-heading text-[13px] font-bold whitespace-nowrap transition-colors",
                 selectedMode === "new"
-                  ? "bg-ink text-white"
-                  : "border border-line bg-canvas text-muted hover:text-ink",
+                  ? "border-nb-black bg-nb-black text-nb-white"
+                  : "border-nb-black bg-nb-surface text-nb-black hover:bg-nb-yellow-light",
               )}
             >
               New upload check
@@ -367,15 +374,15 @@ export function VerifyPanel({
 
           {!displayConnected ? (
             <div className="flex items-center gap-2">
-              <span className="text-[11.5px] text-amber-700">
+              <span className="text-[11.5px] text-nb-black">
                 Connect wallet to verify ownership:
               </span>
               <ConnectWallet />
             </div>
           ) : (
-            <span className="font-mono text-[12px] text-muted">
+            <span className="font-mono text-[12px] text-nb-muted">
               Claimer:{" "}
-              <span className="text-ink">{truncateMiddle(displayAddress || "", 6, 4)}</span>
+              <span className="text-nb-black">{truncateMiddle(displayAddress || "", 6, 4)}</span>
             </span>
           )}
         </div>
@@ -403,21 +410,21 @@ export function VerifyPanel({
                   void handleFile(e.dataTransfer.files?.[0]);
                 }}
                 className={cn(
-                  "group relative flex w-full flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed px-6 py-10 text-center transition-colors duration-300",
+                  "group relative flex w-full flex-col items-center justify-center overflow-hidden border-2 border-dashed px-6 py-10 text-center transition-colors duration-300",
                   dragging
-                    ? "border-brand-aqua bg-brand-cyan/[0.06]"
-                    : "border-line bg-canvas/60 hover:border-brand-aqua/60 hover:bg-brand-cyan/[0.03]",
+                    ? "border-nb-black bg-nb-yellow"
+                    : "border-nb-black bg-nb-bg-warm hover:border-nb-black hover:bg-nb-yellow",
                 )}
               >
-                <span className="grid size-12 place-items-center rounded-2xl bg-white text-brand-teal shadow-glass ring-1 ring-line/70 transition-transform duration-500 ease-(--ease-out-expo) group-hover:-translate-y-1">
+                <span className="grid size-12 place-items-center bg-nb-surface text-nb-black transition-transform duration-500 ease-(--ease-out-expo) group-hover:-translate-y-1">
                   <ImageUp className="size-5" />
                 </span>
-                <span className="mt-4 font-display text-[15px] font-semibold text-ink">
+                <span className="mt-4 font-heading text-[16px] font-bold text-nb-black">
                   {dragging ? "Release to verify" : "Drop an image to verify"}
                 </span>
-                <span className="mt-1 text-[13px] text-muted">
+                <span className="mt-1 text-[13px] text-nb-muted">
                   or{" "}
-                  <span className="font-medium text-brand-teal underline-offset-4 group-hover:underline">
+                  <span className="font-medium text-nb-black underline-offset-4 group-hover:underline">
                     browse files
                   </span>{" "}
                   · JPG, PNG, WebP up to 25 MB
@@ -427,7 +434,7 @@ export function VerifyPanel({
               {run.phase === "error" && (
                 <p
                   role="alert"
-                  className="mt-3 flex items-center gap-2 rounded-xl bg-rose-50 px-3 py-2 text-[13px] text-rose-800"
+                  className="mt-3 flex items-center gap-2 bg-nb-pink-light px-3 py-2 text-[13px] text-nb-black"
                 >
                   <TriangleExclamationPoint className="size-4 shrink-0" />
                   {run.message}
@@ -435,7 +442,7 @@ export function VerifyPanel({
               )}
 
               <div className="mt-5">
-                <p className="text-[12px] font-medium text-muted">Or try a sample</p>
+                <p className="text-[12px] font-medium text-nb-muted">Or try a sample</p>
                 <ul className="mt-2 grid grid-cols-3 gap-3">
                   {samples.map((s) => (
                     <li key={s.fileName}>
@@ -447,7 +454,7 @@ export function VerifyPanel({
                             wait(250).then(() => s.hash),
                           )
                         }
-                        className="group w-full overflow-hidden rounded-2xl text-left ring-1 ring-line/80 transition-shadow hover:shadow-float"
+                        className="group w-full overflow-hidden text-left transition-shadow hover:shadow-nb-sm"
                         aria-label={`Verify sample ${s.fileName}`}
                       >
                         <span className="block aspect-[4/3] overflow-hidden">
@@ -456,10 +463,10 @@ export function VerifyPanel({
                           </span>
                         </span>
                         <span className="block px-3 py-2">
-                          <span className="block truncate text-[12px] font-medium text-ink">
+                          <span className="block truncate text-[12px] font-medium text-nb-black">
                             {s.fileName}
                           </span>
-                          <span className="block text-[11px] text-muted">{s.hint}</span>
+                          <span className="block text-[11px] text-nb-muted">{s.hint}</span>
                         </span>
                       </button>
                     </li>
@@ -501,7 +508,7 @@ function Preview({ run }: { run: Extract<Run, { phase: "running" | "done" }> }) 
 
   return (
     <div>
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-canvas ring-1 ring-line/70">
+      <div className="relative aspect-[4/3] overflow-hidden bg-nb-bg-warm">
         {subject.previewUrl ? (
           // eslint-disable-next-line @next/next/no-img-element -- local blob preview
           <img
@@ -518,9 +525,8 @@ function Preview({ run }: { run: Extract<Run, { phase: "running" | "done" }> }) 
         )}
 
         {!done && (
-          <div aria-hidden className="absolute inset-x-0 top-0 h-[12%] animate-scan">
-            <div className="h-full bg-gradient-to-b from-transparent via-brand-cyan/25 to-brand-cyan/50" />
-            <div className="h-px bg-brand-cyan shadow-[0_0_18px_2px_rgb(6_214_255/0.9)]" />
+          <div aria-hidden className="absolute inset-x-0 top-0 flex h-[10%] animate-scan items-end">
+            <div className="h-2.5 w-full border-y-[3px] border-nb-black bg-nb-yellow" />
           </div>
         )}
 
@@ -532,7 +538,7 @@ function Preview({ run }: { run: Extract<Run, { phase: "running" | "done" }> }) 
                 initial={{ opacity: 0, scale: 1.25 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.15 + i * 0.15, duration: 0.5, ease: EASE }}
-                className="absolute rounded-md border-2 border-verdict-tampered bg-verdict-tampered/15"
+                className="absolute border-2 border-verdict-tampered bg-verdict-tampered/15"
                 style={{
                   left: `${r.left}%`,
                   top: `${r.top}%`,
@@ -544,8 +550,8 @@ function Preview({ run }: { run: Extract<Run, { phase: "running" | "done" }> }) 
           )}
       </div>
       <div className="mt-3 flex items-center justify-between gap-3 text-[12px]">
-        <span className="truncate font-medium text-ink">{subject.fileName}</span>
-        <span className="shrink-0 text-muted tabular-nums">
+        <span className="truncate font-medium text-nb-black">{subject.fileName}</span>
+        <span className="shrink-0 text-nb-muted tabular-nums">
           {formatBytes(subject.sizeBytes)} · {subject.dimensions}
         </span>
       </div>
@@ -564,17 +570,17 @@ function Steps({ step, hash }: { step: number; hash?: string }) {
             <li
               key={s.id}
               className={cn(
-                "flex items-start gap-3 rounded-xl px-3 py-2.5 transition-colors duration-300",
-                state === "running" && "bg-brand-cyan/[0.07]",
+                "flex items-start gap-3 px-3 py-2.5 transition-colors duration-300",
+                state === "running" && "bg-nb-yellow",
               )}
             >
               <span className="mt-0.5 grid size-5 shrink-0 place-items-center">
                 {state === "done" ? (
-                  <CircleCheck className="size-5 text-brand-teal" />
+                  <CircleCheck className="size-5 text-nb-black" />
                 ) : state === "running" ? (
-                  <LoaderCircle className="size-4.5 animate-spin text-brand-aqua" />
+                  <LoaderCircle className="size-4.5 animate-spin text-nb-black" />
                 ) : (
-                  <span className="size-2 rounded-full bg-line" />
+                  <span className="bg-line size-2" />
                 )}
               </span>
               <span className="min-w-0">
@@ -584,13 +590,13 @@ function Steps({ step, hash }: { step: number; hash?: string }) {
                     state === "running"
                       ? "shimmer-text"
                       : state === "done"
-                        ? "text-ink"
-                        : "text-muted",
+                        ? "text-nb-black"
+                        : "text-nb-muted",
                   )}
                 >
                   {s.label}
                 </span>
-                <span className="block text-[12px] text-muted">
+                <span className="block text-[12px] text-nb-muted">
                   {s.id === "fingerprint" && hash ? (
                     <span className="font-mono">sha256 {truncateMiddle(hash, 10, 6)}</span>
                   ) : (
@@ -603,9 +609,9 @@ function Steps({ step, hash }: { step: number; hash?: string }) {
         })}
       </ol>
       <div className="mt-auto pt-4">
-        <div className="h-1.5 overflow-hidden rounded-full bg-brand-cyan/15">
+        <div className="h-4 overflow-hidden border-[3px] border-nb-black bg-nb-surface">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-brand-teal via-brand-aqua to-brand-cyan"
+            className="h-full bg-nb-yellow"
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.6, ease: EASE }}
           />
@@ -634,14 +640,14 @@ function Result({ run, onOpen }: { run: Extract<Run, { phase: "done" }>; onOpen:
         key="sha"
         type="button"
         onClick={() => navigator.clipboard?.writeText(hash).then(() => setCopied(true))}
-        className="inline-flex items-center gap-1.5 font-mono text-ink hover:text-brand-teal"
+        className="inline-flex items-center gap-1.5 font-mono text-nb-black hover:text-nb-black"
         aria-label="Copy SHA-256 digest"
       >
         {truncateMiddle(hash, 8, 6)}
         {copied ? (
-          <CircleCheck className="size-3.5 text-brand-teal" />
+          <CircleCheck className="size-3.5 text-nb-black" />
         ) : (
-          <Copy className="size-3.5 text-muted" />
+          <Copy className="size-3.5 text-nb-muted" />
         )}
       </button>,
     ],
@@ -674,39 +680,41 @@ function Result({ run, onOpen }: { run: Extract<Run, { phase: "done" }>; onOpen:
           initial={{ scale: 0.5, rotate: -12 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 16 }}
-          className={cn("grid size-12 place-items-center rounded-2xl", meta.soft)}
+          className={cn("grid size-12 place-items-center", meta.soft)}
         >
           <Icon className="size-6" />
         </motion.span>
         <div>
           <VerdictBadge verdict={result.verdict} size="md" />
-          <p className="mt-1 text-[12.5px] text-muted">{meta.description}</p>
+          <p className="mt-1 text-[12.5px] text-nb-muted">{meta.description}</p>
         </div>
         <div className="ml-auto text-right">
-          <p className="text-[12px] text-muted">Confidence</p>
-          <p className="text-[1.5rem] leading-tight font-semibold text-ink">{result.confidence}%</p>
+          <p className="text-[12px] text-nb-muted">Confidence</p>
+          <p className="text-[1.5rem] leading-tight font-semibold text-nb-black">
+            {result.confidence}%
+          </p>
         </div>
       </div>
 
       {/* Task 3: Status Banners */}
       {run.apiResult?.status === "VERIFIED" && (
-        <div className="mt-4 flex items-center gap-2 rounded-2xl border border-emerald-500/20 bg-emerald-500/10 px-4 py-3 text-[13.5px] font-semibold text-emerald-900">
-          <CircleCheck className="size-4.5 shrink-0 text-emerald-600" />
+        <div className="mt-4 flex items-center gap-2 border-2 border-nb-black bg-nb-green-light px-4 py-3 text-[13.5px] font-semibold text-nb-black">
+          <CircleCheck className="size-4.5 shrink-0 text-nb-black" />
           <span>✅ Verified — you are the registered owner</span>
         </div>
       )}
 
       {run.apiResult?.status === "NOT_REGISTERED" && (
-        <div className="mt-4 flex items-center gap-2 rounded-2xl border border-line bg-canvas/80 px-4 py-3 text-[13.5px] font-medium text-muted">
-          <span className="size-2 shrink-0 rounded-full bg-muted" />
+        <div className="mt-4 flex items-center gap-2 border-2 border-nb-black bg-nb-bg-warm px-4 py-3 text-[13.5px] font-medium text-nb-muted">
+          <span className="bg-muted size-2 shrink-0" />
           <span>Image not found in registry</span>
         </div>
       )}
 
       {run.apiResult?.status === "MORPHING_DETECTED" && (
-        <div className="mt-4 rounded-2xl border border-rose-500/20 bg-rose-500/10 p-3.5 text-rose-900">
+        <div className="mt-4 border-2 border-nb-black bg-nb-pink-light p-3.5 text-nb-black">
           <div className="flex items-center gap-2 text-[13.5px] font-semibold">
-            <ShieldAlert className="size-4.5 shrink-0 text-rose-600" />
+            <ShieldAlert className="size-4.5 shrink-0 text-nb-black" />
             <span>
               🚩 Morphing detected — similarity: {run.apiResult.similarityPercent}%, real owner:{" "}
               <span className="font-mono">
@@ -715,7 +723,7 @@ function Result({ run, onOpen }: { run: Extract<Run, { phase: "done" }>; onOpen:
             </span>
           </div>
           {run.apiResult.incidentKey && (
-            <p className="mt-1 font-mono text-[11.5px] text-rose-700">
+            <p className="mt-1 font-mono text-[11.5px] text-nb-black">
               Incident logged on Arkiv: {truncateMiddle(run.apiResult.incidentKey, 10, 6)}
             </p>
           )}
@@ -723,17 +731,17 @@ function Result({ run, onOpen }: { run: Extract<Run, { phase: "done" }>; onOpen:
       )}
 
       {run.apiResult?.status === "ALREADY_REGISTERED" && (
-        <div className="mt-4 flex items-center gap-2 rounded-2xl border border-amber-500/20 bg-amber-500/10 px-4 py-3 text-[13.5px] font-semibold text-amber-900">
-          <ShieldCheck className="size-4.5 shrink-0 text-amber-600" />
+        <div className="mt-4 flex items-center gap-2 border-2 border-nb-black bg-nb-orange-light px-4 py-3 text-[13.5px] font-semibold text-nb-black">
+          <ShieldCheck className="size-4.5 shrink-0 text-nb-black" />
           <span>Already registered by {truncateMiddle(run.apiResult.owner, 6, 4)}</span>
         </div>
       )}
 
-      <dl className="mt-5 divide-y divide-line/70 rounded-2xl bg-canvas/70 px-4 text-[13px] ring-1 ring-line/60">
+      <dl className="mt-5 divide-y-2 divide-nb-black bg-nb-bg-warm px-4 text-[13px]">
         {facts.map(([k, v]) => (
           <div key={k} className="flex items-center justify-between gap-4 py-2.5">
-            <dt className="text-muted">{k}</dt>
-            <dd className="text-right text-ink">{v}</dd>
+            <dt className="text-nb-muted">{k}</dt>
+            <dd className="text-right text-nb-black">{v}</dd>
           </div>
         ))}
       </dl>
@@ -741,7 +749,7 @@ function Result({ run, onOpen }: { run: Extract<Run, { phase: "done" }>; onOpen:
       <button
         type="button"
         onClick={onOpen}
-        className="group mt-4 inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-ink text-[13.5px] font-semibold text-white transition-colors hover:bg-ink-soft"
+        className="group mt-4 inline-flex h-10 items-center justify-center gap-2 bg-nb-black text-[13.5px] font-semibold text-nb-white transition-colors hover:bg-nb-black"
       >
         View full report
         <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function RegisterPage() {
   return (
-    <div className="min-h-screen bg-canvas lg:grid lg:grid-cols-[264px_minmax(0,1fr)]">
+    <div className="min-h-screen bg-nb-bg-warm lg:grid lg:grid-cols-[264px_minmax(0,1fr)]">
       <Sidebar />
       <div className="min-w-0">
         <Topbar />
@@ -21,7 +21,7 @@ export default function RegisterPage() {
           <div className="flex items-center gap-2">
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-1.5 text-[13px] font-medium text-muted transition-colors hover:text-ink"
+              className="inline-flex items-center gap-1.5 text-[13px] font-medium text-nb-muted transition-colors hover:text-nb-black"
             >
               <ArrowLeft className="size-4" /> Back to Dashboard
             </Link>

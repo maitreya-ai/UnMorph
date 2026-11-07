@@ -16,16 +16,17 @@ export function Manifesto() {
   const words = TEXT.split(" ");
 
   return (
-    <section aria-label="Why UnMorph" className="relative px-5 py-24 sm:px-6 sm:py-36">
+    <section
+      aria-label="Why UnMorph"
+      className="relative border-b-4 border-nb-black bg-nb-pink-light px-5 py-24 sm:px-6 sm:py-32"
+    >
       <div className="mx-auto max-w-5xl">
         <p className="mb-8 flex">
-          <span className="border-[3px] border-nb-black bg-nb-yellow px-3 py-1 font-heading text-[12px] font-bold tracking-[0.18em] text-nb-black uppercase shadow-nb-sm">
-            Why it matters
-          </span>
+          <span className="nb-label">01 — Why it matters</span>
         </p>
         <p
           ref={ref}
-          className="font-display text-[clamp(1.6rem,3.8vw,2.85rem)] leading-[1.2] font-extrabold tracking-[-0.03em] text-nb-black uppercase"
+          className="font-heading text-[clamp(1.65rem,3.9vw,3rem)] leading-[1.25] font-bold tracking-[-0.02em] text-nb-black"
         >
           <span className="sr-only">{TEXT}</span>
           <span aria-hidden>
@@ -65,7 +66,7 @@ function Word({
         style={{ opacity, y }}
         className={
           highlight
-            ? "mb-1 inline-block border-[3px] border-nb-black bg-nb-yellow px-1.5 shadow-nb-sm"
+            ? "mb-1.5 inline-block border-[3px] border-nb-black bg-nb-yellow px-2 shadow-nb-sm"
             : "inline-block"
         }
       >

@@ -59,7 +59,7 @@ export function HeroConsole() {
             <ShieldCheck className="size-3 shrink-0" />
             <span className="truncate">app.unmorph.io/verify/VRF-20931</span>
           </div>
-          <span className="hidden items-center gap-1.5 border-[2px] border-nb-black bg-nb-black px-2.5 py-1 font-heading text-[11px] font-bold uppercase tracking-wide text-nb-bg sm:inline-flex">
+          <span className="hidden items-center gap-1.5 border-2 border-nb-black bg-nb-black px-2.5 py-1 font-mono text-[11px] tracking-[0.05em] text-nb-white uppercase sm:inline-flex">
             <span className="size-2 animate-pulse bg-nb-green" />
             Live
           </span>
@@ -73,9 +73,11 @@ export function HeroConsole() {
 
               {/* scan beam */}
               {!done && inView && (
-                <div aria-hidden className="absolute inset-x-0 top-0 h-[10%] animate-scan">
-                  <div className="h-full bg-nb-yellow/35" />
-                  <div className="h-[3px] bg-nb-black" />
+                <div
+                  aria-hidden
+                  className="absolute inset-x-0 top-0 flex h-[10%] animate-scan items-end"
+                >
+                  <div className="h-2.5 w-full border-y-[3px] border-nb-black bg-nb-yellow" />
                 </div>
               )}
 
@@ -95,7 +97,7 @@ export function HeroConsole() {
                       <ShieldCheck className="size-4.5" />
                     </span>
                     <span className="text-left leading-tight">
-                      <span className="block font-heading text-[12px] font-bold uppercase text-nb-black">
+                      <span className="block font-heading text-[14px] font-bold text-nb-black">
                         Authentic
                       </span>
                       <span className="block text-[11px] text-nb-black/70">
@@ -111,7 +113,7 @@ export function HeroConsole() {
           {/* integrity report */}
           <div className="flex flex-col border-t-[3px] border-nb-black p-4 text-left md:border-t-0 md:border-l-[3px] md:p-5">
             <div className="flex items-baseline justify-between">
-              <p className="font-display text-[14px] font-extrabold uppercase tracking-tight text-nb-black">
+              <p className="font-heading text-[17px] font-bold tracking-tight text-nb-black">
                 Integrity report
               </p>
               <p className="font-mono text-[11px] text-nb-muted">summit-press-photo.jpg</p>
@@ -138,13 +140,13 @@ export function HeroConsole() {
                         "grid size-7 shrink-0 place-items-center border-[2px] transition-colors duration-300",
                         state === "done"
                           ? "border-nb-black bg-nb-green text-nb-black"
-                          : "border-nb-black/30 bg-nb-bg text-nb-muted",
+                          : "border-nb-black bg-nb-bg-warm text-nb-muted",
                       )}
                     >
                       <Icon className="size-3.5" />
                     </span>
                     <span className="min-w-0 flex-1">
-                      <span className="block font-heading text-[12px] font-bold uppercase text-nb-black">
+                      <span className="block font-heading text-[13.5px] font-bold text-nb-black">
                         {check.label}
                       </span>
                       <span className="block truncate font-mono text-[10.5px] text-nb-muted">
@@ -159,7 +161,7 @@ export function HeroConsole() {
                             initial={{ opacity: 0, y: 6 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, ease: EASE }}
-                            className="inline-flex items-center gap-1 font-heading text-[10px] font-bold uppercase text-nb-black"
+                            className="inline-flex items-center gap-1 font-mono text-[10px] tracking-[0.05em] text-nb-black uppercase"
                           >
                             <CircleCheck className="size-3.5" />
                             {check.result}
@@ -190,7 +192,7 @@ export function HeroConsole() {
 
             <div className="mt-auto pt-4">
               <div className="border-[3px] border-nb-black bg-nb-bg p-3.5">
-                <div className="flex items-center justify-between font-heading text-[11px] font-bold uppercase tracking-wide text-nb-black">
+                <div className="flex items-center justify-between font-mono text-[11px] tracking-[0.1em] text-nb-black uppercase">
                   <span>Confidence</span>
                   <span className="tabular-nums">{done ? "99.4%" : "—"}</span>
                 </div>

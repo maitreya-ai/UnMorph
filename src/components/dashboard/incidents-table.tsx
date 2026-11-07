@@ -72,23 +72,21 @@ export function IncidentsTable() {
   };
 
   return (
-    <div className="rounded-3xl border border-line/80 bg-white">
+    <div className="border-[3px] border-nb-black bg-nb-surface shadow-nb">
       <div className="flex flex-col gap-4 p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <div className="flex items-center gap-2">
-            <span className="grid size-7 place-items-center rounded-lg bg-rose-50 text-rose-600">
+            <span className="grid size-7 place-items-center bg-nb-pink-light text-nb-black">
               <ShieldAlert className="size-4" />
             </span>
-            <h2 className="font-display text-[17px] font-medium tracking-tight text-ink">
-              Morphing incident log
-            </h2>
+            <h2 className="text-[1.35rem] leading-tight text-nb-black">Morphing incident log</h2>
             {incidents.length > 0 && (
-              <span className="rounded-full bg-rose-100 px-2 py-0.5 text-[11px] font-bold text-rose-800">
+              <span className="bg-nb-pink-light px-2 py-0.5 text-[11px] font-bold text-nb-black">
                 {incidents.length} {incidents.length === 1 ? "incident" : "incidents"}
               </span>
             )}
           </div>
-          <p className="mt-1 text-[13px] text-muted">
+          <p className="mt-1 text-[13px] text-nb-muted">
             Immutable security logs recorded on Arkiv whenever someone attempts to re-register or
             verify a morphed variant of your images.
           </p>
@@ -100,7 +98,7 @@ export function IncidentsTable() {
               type="button"
               onClick={fetchIncidents}
               disabled={loading}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-line bg-canvas/60 px-3 py-1.5 text-[12.5px] font-medium text-ink transition hover:bg-canvas"
+              className="inline-flex nb-press-sm items-center gap-1.5 border-2 border-nb-black bg-nb-surface px-3 py-1.5 font-heading text-[13px] font-bold text-nb-black"
             >
               <RefreshCw className={`size-3.5 ${loading ? "animate-spin" : ""}`} />
               <span>Refresh</span>
@@ -110,14 +108,14 @@ export function IncidentsTable() {
       </div>
 
       {!displayConnected ? (
-        <div className="border-t border-line/70 p-8 text-center">
-          <div className="mx-auto grid size-12 place-items-center rounded-2xl bg-amber-50 text-amber-700">
+        <div className="border-t-2 border-nb-black p-8 text-center">
+          <div className="mx-auto grid size-12 place-items-center bg-nb-orange-light text-nb-black">
             <Wallet className="size-6" />
           </div>
-          <h3 className="mt-3 text-[15px] font-semibold text-ink">
+          <h3 className="mt-3 text-[15px] font-semibold text-nb-black">
             Connect wallet to view incident logs
           </h3>
-          <p className="mx-auto mt-1 max-w-md text-[13px] text-muted">
+          <p className="mx-auto mt-1 max-w-md text-[13px] text-nb-muted">
             Arkiv indexes incident logs by legitimate owner. Connect the wallet that owns your
             registered images to query live on-chain logs.
           </p>
@@ -126,21 +124,23 @@ export function IncidentsTable() {
           </div>
         </div>
       ) : displayedIncidents.length === 0 ? (
-        <div className="border-t border-line/70 p-8 text-center">
-          <div className="mx-auto grid size-10 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+        <div className="border-t-2 border-nb-black p-8 text-center">
+          <div className="mx-auto grid size-10 place-items-center bg-nb-green-light text-nb-black">
             <CheckCircle2 className="size-5" />
           </div>
-          <h3 className="mt-2 text-[14.5px] font-medium text-ink">No morphing attempts detected</h3>
-          <p className="mx-auto mt-1 max-w-sm text-[13px] text-muted">
+          <h3 className="mt-2 text-[14.5px] font-medium text-nb-black">
+            No morphing attempts detected
+          </h3>
+          <p className="mx-auto mt-1 max-w-sm text-[13px] text-nb-muted">
             All registered images owned by{" "}
             <span className="font-mono">{truncateMiddle(displayAddress || "", 6, 4)}</span> are
             clean with no recorded tampering or unauthorized duplicates.
           </p>
         </div>
       ) : (
-        <div className="overflow-x-auto border-t border-line/70">
+        <div className="overflow-x-auto border-t-2 border-nb-black">
           <table className="w-full text-left text-[13px]">
-            <thead className="bg-canvas/60 text-[11.5px] font-semibold tracking-wider text-muted uppercase">
+            <thead className="bg-nb-black font-mono text-[11px] tracking-[0.1em] text-nb-white uppercase">
               <tr>
                 <th className="px-5 py-3 sm:px-6">Target Image Hash</th>
                 <th className="px-4 py-3">Claimer Wallet</th>
@@ -149,7 +149,7 @@ export function IncidentsTable() {
                 <th className="px-5 py-3 text-right sm:px-6">Incident Key</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-line/70">
+            <tbody className="divide-y-2 divide-nb-black">
               {displayedIncidents.map((inc, i) => {
                 let payload: { similarityScore?: number; detectedAt?: number } = {};
                 try {
@@ -174,21 +174,21 @@ export function IncidentsTable() {
                     : targetHash;
 
                 return (
-                  <tr key={incidentKey} className="transition-colors hover:bg-canvas/30">
-                    <td className="px-5 py-3 font-mono font-medium text-ink sm:px-6">
+                  <tr key={incidentKey} className="transition-colors hover:bg-nb-yellow-light">
+                    <td className="px-5 py-3 font-mono font-medium text-nb-black sm:px-6">
                       <span title={targetHash}>{formattedHash}</span>
                     </td>
-                    <td className="px-4 py-3 font-mono text-muted">
+                    <td className="px-4 py-3 font-mono text-nb-muted">
                       <div className="flex items-center gap-1.5">
                         <span title={claimer}>{truncateMiddle(claimer, 8, 6)}</span>
                         <button
                           type="button"
                           onClick={() => copyToClipboard(claimer, `claim_${i}`)}
-                          className="hover:text-ink"
+                          className="hover:text-nb-black"
                           title="Copy claimer address"
                         >
                           {copiedKey === `claim_${i}` ? (
-                            <CheckCircle2 className="size-3 text-emerald-600" />
+                            <CheckCircle2 className="size-3 text-nb-black" />
                           ) : (
                             <Copy className="size-3" />
                           )}
@@ -196,12 +196,12 @@ export function IncidentsTable() {
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="inline-flex items-center gap-1 rounded-md bg-rose-50 px-2 py-0.5 text-[11.5px] font-bold text-rose-700">
+                      <span className="inline-flex items-center gap-1 bg-nb-pink-light px-2 py-0.5 text-[11.5px] font-bold text-nb-black">
                         <AlertTriangle className="size-3" />
                         {sim}%
                       </span>
                     </td>
-                    <td className="px-4 py-3 text-muted">
+                    <td className="px-4 py-3 text-nb-muted">
                       {detectedAt > 0
                         ? new Date(detectedAt * 1000).toLocaleString(undefined, {
                             month: "short",
@@ -211,17 +211,17 @@ export function IncidentsTable() {
                           })
                         : "Just now"}
                     </td>
-                    <td className="px-5 py-3 text-right font-mono text-[12px] text-muted sm:px-6">
+                    <td className="px-5 py-3 text-right font-mono text-[12px] text-nb-muted sm:px-6">
                       <div className="flex items-center justify-end gap-1.5">
                         <span title={incidentKey}>{truncateMiddle(incidentKey, 8, 6)}</span>
                         <button
                           type="button"
                           onClick={() => copyToClipboard(incidentKey, `key_${i}`)}
-                          className="hover:text-ink"
+                          className="hover:text-nb-black"
                           title="Copy Incident Key"
                         >
                           {copiedKey === `key_${i}` ? (
-                            <CheckCircle2 className="size-3 text-emerald-600" />
+                            <CheckCircle2 className="size-3 text-nb-black" />
                           ) : (
                             <Copy className="size-3" />
                           )}

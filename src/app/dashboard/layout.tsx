@@ -3,7 +3,7 @@ import { Topbar } from "@/components/dashboard/topbar";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-canvas lg:grid lg:grid-cols-[264px_minmax(0,1fr)]">
+    <div className="min-h-screen bg-nb-bg lg:grid lg:grid-cols-[272px_minmax(0,1fr)]">
       <Sidebar />
       <div className="min-w-0">
         <Topbar />

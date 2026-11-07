@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="public/brand/logo-mark.png" alt="UnMorph logo" width="72" />
+<img src="assets/logo-mark.svg" alt="UnMorph logo" width="72" />
 
 # UnMorph
 
@@ -25,7 +25,7 @@ Prevent morphing. Prove authenticity.
   <a href="#design-system">Design system</a>
 </p>
 
-<img src="docs/screenshots/landing-hero.webp" alt="UnMorph landing page hero" width="100%" />
+<img src="docs/screenshots/landing-hero.jpg" alt="UnMorph landing page hero" width="100%" />
 
 </div>
 
@@ -68,41 +68,41 @@ Read the full vision in [`docs/project-overview.md`](docs/project-overview.md).
 <table>
   <tr>
     <td width="50%" valign="top">
-      <img src="docs/screenshots/landing-console.webp" alt="Verification console on the landing page" />
-      <p align="center"><sub><b>Landing</b> — tilting verification console, parallax chips, compact dynamic island</sub></p>
+      <img src="docs/screenshots/landing-console.jpg" alt="Verification console on the landing page" />
+      <p align="center"><sub><b>Landing</b> — yellow hero slab, hard-shadow verification console, black marquee band</sub></p>
     </td>
     <td width="50%" valign="top">
-      <img src="docs/screenshots/detection.webp" alt="Tamper detection comparison slider" />
+      <img src="docs/screenshots/detection.jpg" alt="Tamper detection comparison slider" />
       <p align="center"><sub><b>Tamper detection</b> — draggable original-vs-copy comparison with heatmaps</sub></p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <img src="docs/screenshots/dashboard.webp" alt="Image verification dashboard" />
+      <img src="docs/screenshots/dashboard.jpg" alt="Image verification dashboard" />
       <p align="center"><sub><b>Dashboard</b> — KPIs, live verifier, activity chart and registry</sub></p>
     </td>
     <td width="50%" valign="top">
-      <img src="docs/screenshots/sign-in.webp" alt="Sign-in page" />
+      <img src="docs/screenshots/sign-in.jpg" alt="Sign-in page" />
       <p align="center"><sub><b>Sign in</b> — demo email & World ID flows into the dashboard</sub></p>
     </td>
   </tr>
   <tr>
     <td width="50%" valign="top">
-      <img src="docs/screenshots/not-found.webp" alt="Branded 404 page" />
+      <img src="docs/screenshots/not-found.jpg" alt="Branded 404 page" />
       <p align="center"><sub><b>404</b> — "This page didn't pass verification", with a pixel-morphed 404</sub></p>
     </td>
     <td width="50%" valign="top" align="center">
-      <img src="docs/screenshots/mobile-menu.webp" alt="Mobile navigation menu" width="45%" />
-      <img src="docs/screenshots/mobile-dashboard.webp" alt="Mobile dashboard" width="45%" />
-      <p align="center"><sub><b>Mobile</b> — the island morphs into a menu sheet; responsive dashboard</sub></p>
+      <img src="docs/screenshots/mobile-menu.jpg" alt="Mobile navigation menu" width="45%" />
+      <img src="docs/screenshots/mobile-dashboard.jpg" alt="Mobile dashboard" width="45%" />
+      <p align="center"><sub><b>Mobile</b> — sticky bar with a Space Mono MENU drop-down; responsive dashboard</sub></p>
     </td>
   </tr>
 </table>
 
 ### Highlights
 
-- **Dynamic island navigation** — boots as a logo pill, springs open, collapses into a status pill
-  (scroll-progress ring + live section label) as you scroll, and morphs into a full menu on mobile.
+- **Sticky neubrutalist nav** — white bar with a 4px rule, yellow active-section block, pink
+  reading-progress strip and a Space Mono `MENU` drop-down on small screens.
 - **Scroll-driven motion** — Lenis smooth scrolling with Motion parallax: a 3D console that flattens
   into place, a manifesto that inks in word by word, a sticky "how it works", pinned horizontal use
   cases and a rising footer wordmark.
@@ -157,7 +157,7 @@ bun run dev                 # → http://localhost:3000
 | Styling   | [Tailwind CSS v4](https://tailwindcss.com) — CSS-first tokens in `src/app/globals.css`                                              |
 | Motion    | [Motion](https://motion.dev) for scroll-linked and layout animation · [Lenis](https://lenis.darkroom.engineering) for smooth scroll |
 | Icons     | [Lucide](https://lucide.dev)                                                                                                        |
-| Fonts     | Plus Jakarta Sans + Inter, self-hosted via `next/font/local`                                                                        |
+| Fonts     | Syne · Space Grotesk · Inter · Space Mono, self-hosted at build time via `next/font/google`                                         |
 | Testing   | Jest + Testing Library · Playwright                                                                                                 |
 | Tooling   | Bun · Husky · lint-staged · ESLint · Prettier                                                                                       |
 
@@ -166,14 +166,14 @@ bun run dev                 # → http://localhost:3000
 ```text
 src/
 ├── app/
-│   ├── (marketing)/          # landing page + layout (smooth scroll, island, footer)
+│   ├── (marketing)/          # landing page + layout (smooth scroll, nav, footer)
 │   ├── sign-in/              # demo sign-in
 │   ├── dashboard/            # dashboard shell + overview
 │   ├── not-found.tsx         # branded 404
 │   ├── fonts.ts              # next/font/local setup
 │   └── globals.css           # design tokens, keyframes, utilities
 ├── components/
-│   ├── nav/                  # dynamic island
+│   ├── nav/                  # sticky site nav + back-to-top
 │   ├── landing/              # hero, manifesto, how-it-works, detection, bento, use cases, CTA, footer
 │   ├── auth/                 # sign-in form + brand panel
 │   ├── dashboard/            # KPIs, verifier, chart, table, drawer, sidebar
@@ -185,9 +185,8 @@ src/
 │   ├── mock-data.ts          # deterministic internal mock data
 │   ├── verification.ts       # SHA-256 + mock verdict engine
 │   └── build-verification.ts # pipeline result → registry record
-└── fonts/                    # variable woff2 files + OFL licences
 e2e/                          # Playwright specs
-assets/                       # brand source files (logo, favicon, moodboard)
+assets/                       # brand source (flat SVG logo mark)
 docs/                         # product overview + README screenshots
 ```
 
@@ -202,22 +201,36 @@ docs/                         # product overview + README screenshots
 
 ## Design system
 
-Derived from the brand moodboard in [`assets/moodboard.png`](assets/moodboard.png).
+**Neubrutalism**, copied token-for-token from the reference at
+[neubrutalism.com](https://neubrutalism.com) — palette, border scale, shadow scale, type stack and
+interaction states. Everything lives in [`src/app/globals.css`](src/app/globals.css).
 
-| Token       | Hex       |                                                                                              |
-| ----------- | --------- | -------------------------------------------------------------------------------------------- |
-| Cyan        | `#06D6FF` | ![#06D6FF swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-06D6FF?style=flat-square) |
-| Aqua        | `#00B3E6` | ![#00B3E6 swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-00B3E6?style=flat-square) |
-| Deep Teal   | `#0E7490` | ![#0E7490 swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-0E7490?style=flat-square) |
-| Slate (ink) | `#111827` | ![#111827 swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-111827?style=flat-square) |
-| Cool Gray   | `#6B7280` | ![#6B7280 swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-6B7280?style=flat-square) |
-| Light Gray  | `#E5E7EB` | ![#E5E7EB swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-E5E7EB?style=flat-square) |
-| Background  | `#F8FAFC` | ![#F8FAFC swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-F8FAFC?style=flat-square) |
+| Token      | Hex       |                                                                                              |
+| ---------- | --------- | -------------------------------------------------------------------------------------------- |
+| Canvas     | `#FFFDF5` | ![#FFFDF5 swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-FFFDF5?style=flat-square) |
+| Ink        | `#000000` | ![#000000 swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-000000?style=flat-square) |
+| Yellow     | `#FFD23F` | ![#FFD23F swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-FFD23F?style=flat-square) |
+| Pink       | `#FF6B6B` | ![#FF6B6B swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-FF6B6B?style=flat-square) |
+| Blue       | `#74B9FF` | ![#74B9FF swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-74B9FF?style=flat-square) |
+| Green      | `#88D498` | ![#88D498 swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-88D498?style=flat-square) |
+| Orange     | `#FFA552` | ![#FFA552 swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-FFA552?style=flat-square) |
+| Lavender   | `#B8A9FA` | ![#B8A9FA swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-B8A9FA?style=flat-square) |
+| Warm stone | `#F5F0E8` | ![#F5F0E8 swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-F5F0E8?style=flat-square) |
+| Code       | `#1A1A2E` | ![#1A1A2E swatch](https://img.shields.io/badge/-%20%20%20%20%20%20-1A1A2E?style=flat-square) |
 
-- **Typography** — Plus Jakarta Sans for headlines, branding and UI; Inter for body copy.
-- **Verdict colours** — authentic `#0891B2`, unregistered `#F59E0B`, tampered `#E11D48`; validated
-  for colour-vision-deficiency separation and always paired with an icon and a label.
-- **Motifs** — layered translucent plates (from the logo), glass surfaces, soft cyan glows.
+Each accent also has a `-light` tint (e.g. `#FFF3C4`, `#FFE0E0`, `#E3F2FD`) used for full-bleed section bands.
+
+- **Rules** — `border-radius: 0` everywhere; 2px / 3px / 4px solid black borders; hard offset shadows
+  with zero blur (`3px`, `5px`, `8px`, `12px`); no gradients, blur or glass.
+- **Interaction** — buttons lift `-2px,-2px` into a bigger shadow on hover and press `+3px,+3px` flat
+  on click (`nb-press`, `nb-press-sm`); focus is a 3px blue outline.
+- **Typography** — Syne 800 for display only (hero, wordmark, stats), Space Grotesk 700 for every
+  heading (sentence case), Inter 400 for body, Space Mono for labels, badges and every hash/ID.
+- **Signature pieces** — mono `.section-label` chips (`nb-label`), warm-stone card header strips,
+  midnight code blocks (`nb-code`), hatched tamper markers (`nb-tamper`), a black marquee band,
+  pastel section bands split by 4px rules, and a yellow back-to-top square.
+- **Verdict colours** — authentic green `#88D498`, unregistered orange `#FFA552`, tampered pink
+  `#FF6B6B`; always paired with an icon and a label, never colour alone.
 
 ## Implementation notes
 
@@ -239,8 +252,8 @@ Derived from the brand moodboard in [`assets/moodboard.png`](assets/moodboard.pn
 
 ## Credits
 
-Plus Jakarta Sans and Inter are licensed under the
-[SIL Open Font License 1.1](src/fonts/OFL-Inter.txt) — licence files live in `src/fonts/`.
+Syne, Space Grotesk, Inter and Space Mono are licensed under the SIL Open Font License 1.1.
+Design language after [neubrutalism.com](https://neubrutalism.com).
 
 <div align="center">
 <sub>Built with care for a world where every image can prove where it came from.</sub>

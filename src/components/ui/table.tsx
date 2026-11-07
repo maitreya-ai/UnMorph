@@ -3,14 +3,14 @@ import { cn } from "@/lib/utils";
 
 export function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
-    <div className="w-full overflow-x-auto border-[3px] border-nb-black shadow-nb">
+    <div className="w-full overflow-x-auto border-[3px] border-nb-black bg-nb-surface">
       <table className={cn("w-full border-collapse text-sm", className)} {...props} />
     </div>
   );
 }
 
 export function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
-  return <thead className={cn("bg-nb-black text-nb-bg", className)} {...props} />;
+  return <thead className={cn("bg-nb-black text-nb-white", className)} {...props} />;
 }
 
 export function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
@@ -21,7 +21,7 @@ export function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   return (
     <tr
       className={cn(
-        "border-b-[2px] border-nb-black transition-colors last:border-b-0 hover:bg-nb-yellow",
+        "border-b-2 border-nb-black transition-colors last:border-b-0 hover:bg-nb-yellow-light",
         className,
       )}
       {...props}
@@ -29,11 +29,12 @@ export function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   );
 }
 
+/** Column header: Space Mono caps, like the reference's `.stat-label`. */
 export function TableHead({ className, ...props }: React.ComponentProps<"th">) {
   return (
     <th
       className={cn(
-        "px-4 py-3 text-left font-heading text-[11px] font-bold uppercase tracking-[0.1em]",
+        "px-4 py-3 text-left font-mono text-[11px] font-normal tracking-[0.1em] uppercase",
         className,
       )}
       {...props}

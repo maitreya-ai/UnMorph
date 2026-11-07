@@ -13,8 +13,7 @@ import { cn } from "@/lib/utils";
 const SERIES: Verdict[] = ["authentic", "unregistered", "tampered"];
 const HEIGHT = 248;
 const M = { top: 12, right: 4, bottom: 28, left: 40 };
-const GAP = 2;
-const RADIUS = 4;
+const GAP = 0;
 
 const dayFmt = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -35,16 +34,16 @@ export function ActivityChart({ data }: { data: DailyActivity[] }) {
   const [view, setView] = useState<"chart" | "table">("chart");
 
   return (
-    <div className="rounded-3xl border border-line/80 bg-white p-5 sm:p-6">
-      <div className="flex flex-wrap items-start justify-between gap-4">
+    <div className="border-[3px] border-nb-black bg-nb-surface shadow-nb">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b-[3px] border-nb-black bg-nb-bg-warm px-5 py-4 sm:px-6">
         <div>
-          <h2 className="font-display text-[17px] font-medium tracking-tight text-ink">
-            Verification activity
-          </h2>
-          <p className="mt-0.5 text-[13px] text-muted">Last 14 days · checks per day by verdict</p>
+          <h2 className="text-[1.35rem] leading-tight text-nb-black">Verification activity</h2>
+          <p className="mt-1 font-mono text-[11px] tracking-[0.05em] text-nb-muted uppercase">
+            Last 14 days · checks per day by verdict
+          </p>
         </div>
         <div
-          className="flex rounded-xl bg-canvas p-1 ring-1 ring-line/70"
+          className="flex border-[3px] border-nb-black bg-nb-surface shadow-nb-sm"
           role="group"
           aria-label="Display as"
         >
@@ -60,10 +59,8 @@ export function ActivityChart({ data }: { data: DailyActivity[] }) {
               onClick={() => setView(key)}
               aria-pressed={view === key}
               className={cn(
-                "inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[12.5px] font-medium transition-colors",
-                view === key
-                  ? "bg-white text-ink shadow-sm ring-1 ring-line/70"
-                  : "text-muted hover:text-ink",
+                "inline-flex items-center gap-1.5 px-3 py-1.5 font-heading text-[13px] font-bold transition-colors first:border-r-[3px] first:border-nb-black",
+                view === key ? "bg-nb-black text-nb-white" : "text-nb-black hover:bg-nb-yellow",
               )}
             >
               <Icon className="size-3.5" />
@@ -73,16 +70,21 @@ export function ActivityChart({ data }: { data: DailyActivity[] }) {
         </div>
       </div>
 
-      <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1.5" aria-label="Legend">
-        {SERIES.map((s) => (
-          <li key={s} className="flex items-center gap-2 text-[12.5px] text-ink/80">
-            <span className={cn("size-2.5 rounded-[3px]", verdictMeta[s].fill)} />
-            {verdictMeta[s].label}
-          </li>
-        ))}
-      </ul>
+      <div className="p-5 sm:p-6">
+        <ul className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Legend">
+          {SERIES.map((s) => (
+            <li
+              key={s}
+              className="flex items-center gap-2 font-mono text-[11px] tracking-[0.05em] text-nb-black uppercase"
+            >
+              <span className={cn("size-3.5 border-2 border-nb-black", verdictMeta[s].fill)} />
+              {verdictMeta[s].label}
+            </li>
+          ))}
+        </ul>
 
-      {view === "chart" ? <Chart data={data} /> : <DataTable data={data} />}
+        {view === "chart" ? <Chart data={data} /> : <DataTable data={data} />}
+      </div>
     </div>
   );
 }
@@ -107,7 +109,7 @@ function Chart({ data }: { data: DailyActivity[] }) {
   const flip = tipLeft > width - 180;
 
   return (
-    <div ref={ref} className="relative mt-4 h-[248px] w-full" onPointerLeave={() => setHover(null)}>
+    <div ref={ref} className="relative mt-5 h-[248px] w-full" onPointerLeave={() => setHover(null)}>
       {width > 0 && (
         <svg
           width={width}
@@ -124,15 +126,17 @@ function Chart({ data }: { data: DailyActivity[] }) {
                 x2={width - M.right}
                 y1={y(t)}
                 y2={y(t)}
-                stroke="#EEF0F3"
-                strokeWidth="1"
+                stroke="#000000"
+                strokeOpacity={t === 0 ? 1 : 0.18}
+                strokeWidth={t === 0 ? 2.5 : 1.5}
+                strokeDasharray={t === 0 ? undefined : "4 4"}
               />
               <text
                 x={M.left - 10}
                 y={y(t)}
                 dy="0.32em"
                 textAnchor="end"
-                className="fill-muted text-[11px] tabular-nums"
+                className="fill-nb-black font-mono text-[10.5px] tabular-nums"
               >
                 {num.format(t)}
               </text>
@@ -160,14 +164,23 @@ function Chart({ data }: { data: DailyActivity[] }) {
                     const v = d[s];
                     if (!v) return null;
                     const y1 = y(acc + v);
-                    let y0 = y(acc);
-                    if (acc > 0) y0 -= GAP;
+                    const y0 = y(acc) - (acc > 0 ? GAP : 0);
                     acc += v;
                     const h = Math.max(0, y0 - y1);
-                    const isTop = s === topSeries;
-                    const r = isTop ? Math.min(RADIUS, h, barW / 2) : 0;
-                    const path = `M${x} ${y0} V${y1 + r} Q${x} ${y1} ${x + r} ${y1} H${x + barW - r} Q${x + barW} ${y1} ${x + barW} ${y1 + r} V${y0} Z`;
-                    return <path key={s} d={path} fill={verdictMeta[s].hex} data-series={si} />;
+                    return (
+                      <rect
+                        key={s}
+                        x={x}
+                        y={y1}
+                        width={barW}
+                        height={h}
+                        fill={verdictMeta[s].hex}
+                        stroke="#000000"
+                        strokeWidth="2"
+                        data-series={si}
+                        data-top={s === topSeries || undefined}
+                      />
+                    );
                   })}
                 </motion.g>
 
@@ -177,7 +190,7 @@ function Chart({ data }: { data: DailyActivity[] }) {
                     x={x + barW / 2}
                     y={HEIGHT - 8}
                     textAnchor="middle"
-                    className="fill-muted text-[11px]"
+                    className="fill-nb-black font-mono text-[10.5px] uppercase"
                   >
                     {dayFmt.format(new Date(d.date))}
                   </text>
@@ -206,29 +219,28 @@ function Chart({ data }: { data: DailyActivity[] }) {
 
       {hovered && (
         <div
-          className="pointer-events-none absolute top-2 z-10 w-[168px] rounded-xl bg-white p-3 text-[12px] shadow-float ring-1 ring-line"
+          className="pointer-events-none absolute top-2 z-10 w-[176px] border-[3px] border-nb-black bg-nb-surface p-3 text-[12px] shadow-nb"
           style={{ left: flip ? tipLeft - 168 - 14 : tipLeft + 14 }}
         >
-          <p className="font-medium text-muted">{longFmt.format(new Date(hovered.date))}</p>
+          <p className="font-mono text-[11px] text-nb-black uppercase">
+            {longFmt.format(new Date(hovered.date))}
+          </p>
           <ul className="mt-2 space-y-1.5">
             {[...SERIES].reverse().map((s) => (
               <li key={s} className="flex items-center gap-2">
                 <span
-                  className="h-0.5 w-3 rounded-full"
+                  className="size-3 border-2 border-nb-black"
                   style={{ background: verdictMeta[s].hex }}
                 />
-                <span className="font-semibold text-ink tabular-nums">
+                <span className="font-mono font-bold text-nb-black tabular-nums">
                   {num.format(hovered[s])}
                 </span>
-                <span className="text-muted">{verdictMeta[s].label}</span>
+                <span className="text-nb-black/75">{verdictMeta[s].label}</span>
               </li>
             ))}
           </ul>
-          <p className="mt-2 flex justify-between border-t border-line pt-2 text-muted">
-            Total{" "}
-            <span className="font-semibold text-ink tabular-nums">
-              {num.format(total(hovered))}
-            </span>
+          <p className="mt-2 flex justify-between border-t-2 border-nb-black pt-2 font-heading font-bold text-nb-black">
+            Total <span className="font-mono tabular-nums">{num.format(total(hovered))}</span>
           </p>
         </div>
       )}
@@ -238,29 +250,31 @@ function Chart({ data }: { data: DailyActivity[] }) {
 
 function DataTable({ data }: { data: DailyActivity[] }) {
   return (
-    <div className="mt-4 max-h-[248px] overflow-auto rounded-xl ring-1 ring-line/70">
+    <div className="mt-4 max-h-[248px] overflow-auto border-[3px] border-nb-black">
       <table className="w-full text-[13px]">
-        <thead className="sticky top-0 bg-canvas text-left text-[12px] text-muted">
+        <thead className="sticky top-0 bg-nb-black text-left font-mono text-[11px] tracking-[0.05em] text-nb-white uppercase">
           <tr>
-            <th className="px-3 py-2 font-medium">Date</th>
+            <th className="px-3 py-2 font-normal">Date</th>
             {SERIES.map((s) => (
-              <th key={s} className="px-3 py-2 text-right font-medium">
+              <th key={s} className="px-3 py-2 text-right font-normal">
                 {verdictMeta[s].label}
               </th>
             ))}
-            <th className="px-3 py-2 text-right font-medium">Total</th>
+            <th className="px-3 py-2 text-right font-normal">Total</th>
           </tr>
         </thead>
-        <tbody className="tabular-nums">
+        <tbody className="font-mono text-[12px] tabular-nums">
           {[...data].reverse().map((d) => (
-            <tr key={d.date} className="border-t border-line/70">
-              <td className="px-3 py-2 text-ink">{longFmt.format(new Date(d.date))}</td>
+            <tr key={d.date} className="border-t-2 border-nb-black hover:bg-nb-yellow-light">
+              <td className="px-3 py-2 font-sans text-[13px] text-nb-black">
+                {longFmt.format(new Date(d.date))}
+              </td>
               {SERIES.map((s) => (
-                <td key={s} className="px-3 py-2 text-right text-ink/85">
+                <td key={s} className="px-3 py-2 text-right text-nb-black">
                   {num.format(d[s])}
                 </td>
               ))}
-              <td className="px-3 py-2 text-right font-semibold text-ink">
+              <td className="px-3 py-2 text-right font-bold text-nb-black">
                 {num.format(total(d))}
               </td>
             </tr>

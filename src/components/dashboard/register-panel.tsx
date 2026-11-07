@@ -163,16 +163,16 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
   };
 
   return (
-    <div className="rounded-3xl border border-line/80 bg-white p-5 shadow-xs sm:p-6">
+    <div className="border-[3px] border-nb-black bg-nb-surface p-5 shadow-nb sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-cyan/10 px-2.5 py-0.5 text-[11.5px] font-semibold text-brand-teal">
+          <div className="inline-flex items-center gap-1.5 bg-nb-yellow px-2.5 py-0.5 text-[11.5px] font-semibold text-nb-black">
             Arkiv Web3 DB + ETH Swarm
           </div>
-          <h2 className="mt-1 font-display text-[18px] font-medium tracking-tight text-ink">
+          <h2 className="mt-1 font-heading text-[18px] font-medium tracking-tight text-nb-black">
             Register image ownership
           </h2>
-          <p className="mt-0.5 text-[13px] text-muted">
+          <p className="mt-0.5 text-[13px] text-nb-muted">
             Anchors perceptual hash (pHash) into Arkiv and stores unencrypted backup on Swarm.
           </p>
         </div>
@@ -183,7 +183,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-[13px] font-medium text-muted ring-1 ring-line transition-colors hover:bg-canvas hover:text-ink"
+              className="inline-flex nb-press-sm items-center gap-1.5 border-2 border-nb-black bg-nb-surface px-3 py-1.5 font-heading text-[13px] font-bold text-nb-black"
             >
               <RotateCcw className="size-3.5" /> Register another
             </button>
@@ -217,31 +217,31 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
               handleSelectFile(e.dataTransfer.files?.[0]);
             }}
             className={cn(
-              "group relative flex w-full flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed px-6 py-10 text-center transition-colors duration-200",
+              "group relative flex w-full flex-col items-center justify-center overflow-hidden border-2 border-dashed px-6 py-10 text-center transition-colors duration-200",
               dragging
-                ? "border-brand-aqua bg-brand-cyan/[0.06]"
-                : "border-line bg-canvas/60 hover:border-brand-aqua/60 hover:bg-brand-cyan/[0.03]",
+                ? "border-nb-black bg-nb-yellow"
+                : "border-nb-black bg-nb-bg-warm hover:border-nb-black hover:bg-nb-yellow",
             )}
           >
-            <span className="grid size-12 place-items-center rounded-2xl bg-white text-brand-teal shadow-glass ring-1 ring-line/70 transition-transform duration-300 group-hover:-translate-y-1">
+            <span className="grid size-12 place-items-center bg-nb-surface text-nb-black transition-transform duration-300 group-hover:-translate-y-1">
               <ImageUp className="size-5" />
             </span>
-            <span className="mt-3 font-display text-[15px] font-semibold text-ink">
+            <span className="mt-3 font-heading text-[16px] font-bold text-nb-black">
               {dragging ? "Release image to select" : "Click or drag image to register"}
             </span>
-            <span className="mt-1 text-[13px] text-muted">
+            <span className="mt-1 text-[13px] text-nb-muted">
               JPG, PNG, WebP up to 25 MB · Generates 64-bit DCT perceptual hash
             </span>
           </button>
         ) : (
-          <div className="flex flex-col gap-4 rounded-2xl border border-line bg-canvas/40 p-4 sm:flex-row sm:items-center">
-            <div className="relative aspect-video w-full max-w-[180px] shrink-0 overflow-hidden rounded-xl border border-line bg-white shadow-xs">
+          <div className="flex flex-col gap-4 border-2 border-nb-black bg-nb-bg-warm p-4 sm:flex-row sm:items-center">
+            <div className="relative aspect-video w-full max-w-[180px] shrink-0 overflow-hidden border-2 border-nb-black bg-nb-surface">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={previewUrl} alt="Selected preview" className="size-full object-cover" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-[14px] font-semibold text-ink">{imageFile?.name}</p>
-              <p className="text-[12.5px] text-muted">
+              <p className="truncate text-[14px] font-semibold text-nb-black">{imageFile?.name}</p>
+              <p className="text-[12.5px] text-nb-muted">
                 {imageFile ? formatBytes(imageFile.size) : ""} · Ready for pHash indexing
               </p>
               <div className="mt-2 flex items-center gap-2">
@@ -249,7 +249,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={loading}
-                  className="text-[12px] font-medium text-brand-teal hover:underline disabled:opacity-50"
+                  className="text-[12px] font-medium text-nb-black hover:underline disabled:opacity-50"
                 >
                   Change file
                 </button>
@@ -262,7 +262,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
         {previewUrl && (
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label htmlFor="lifetime" className="block text-[12px] font-medium text-ink">
+              <label htmlFor="lifetime" className="block text-[12px] font-medium text-nb-black">
                 Registry Lifetime (Days)
               </label>
               <div className="mt-1 flex items-center gap-2">
@@ -274,7 +274,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
                   value={lifetimeDays}
                   onChange={(e) => setLifetimeDays(Math.max(1, parseInt(e.target.value) || 1))}
                   disabled={loading}
-                  className="h-9 w-full rounded-xl border border-line bg-white px-3 text-[13px] text-ink outline-none focus:border-brand-aqua"
+                  className="h-9 w-full border-2 border-nb-black bg-nb-surface px-3 text-[13px] text-nb-black outline-none focus:border-nb-black"
                 />
                 <div className="flex gap-1">
                   {[30, 90, 365].map((d) => (
@@ -284,10 +284,10 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
                       onClick={() => setLifetimeDays(d)}
                       disabled={loading}
                       className={cn(
-                        "rounded-lg px-2 py-1 text-[11px] font-medium transition",
+                        "border-2 px-2.5 py-1 font-mono text-[12px] font-bold transition-colors",
                         lifetimeDays === d
-                          ? "bg-ink text-white"
-                          : "border border-line bg-canvas text-muted hover:text-ink",
+                          ? "border-nb-black bg-nb-black text-nb-white"
+                          : "border-nb-black bg-nb-surface text-nb-black hover:bg-nb-yellow-light",
                       )}
                     >
                       {d}d
@@ -295,22 +295,20 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
                   ))}
                 </div>
               </div>
-              <p className="mt-1 text-[11px] text-muted">
+              <p className="mt-1 text-[11px] text-nb-muted">
                 Auto-converts to ~{lifetimeDays * 24 * 60 * 30} Arkiv blocks
               </p>
             </div>
 
             <div>
-              <label className="block text-[12px] font-medium text-ink">Owner Wallet</label>
-              <div className="mt-1 flex h-9 items-center justify-between rounded-xl border border-line bg-canvas/70 px-3 font-mono text-[12.5px] text-ink">
+              <label className="block text-[12px] font-medium text-nb-black">Owner Wallet</label>
+              <div className="mt-1 flex h-9 items-center justify-between border-2 border-nb-black bg-nb-bg-warm px-3 font-mono text-[12.5px] text-nb-black">
                 <span>
                   {displayAddress ? truncateMiddle(displayAddress, 8, 6) : "Wallet not connected"}
                 </span>
-                {ensName && (
-                  <span className="font-sans text-[11px] text-brand-teal">{ensName}</span>
-                )}
+                {ensName && <span className="font-sans text-[11px] text-nb-black">{ensName}</span>}
               </div>
-              <p className="mt-1 text-[11px] text-muted">
+              <p className="mt-1 text-[11px] text-nb-muted">
                 Automatically registered as on-chain $owner
               </p>
             </div>
@@ -318,7 +316,7 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
         )}
 
         {error && (
-          <div className="flex items-center gap-2 rounded-xl bg-rose-50 px-3 py-2 text-[13px] text-rose-800">
+          <div className="flex items-center gap-2 bg-nb-pink-light px-3 py-2 text-[13px] text-nb-black">
             <TriangleAlert className="size-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -329,18 +327,18 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
           <button
             type="submit"
             disabled={!displayConnected || loading || !imageFile}
-            className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-ink text-[14px] font-semibold text-white shadow-xs transition hover:bg-ink-soft disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex h-11 w-full items-center justify-center gap-2 bg-nb-black text-[14px] font-semibold text-nb-white transition hover:bg-nb-black disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? (
               <>
-                <Loader2 className="size-4 animate-spin text-brand-cyan" />
+                <Loader2 className="size-4 animate-spin text-nb-black" />
                 <span>
                   {stepText || "Processing pHash, uploading to Swarm & signing on Arkiv…"}
                 </span>
               </>
             ) : !displayConnected ? (
               <>
-                <Wallet className="size-4 text-brand-cyan" />
+                <Wallet className="size-4 text-nb-black" />
                 <span>Connect wallet to register</span>
               </>
             ) : (
@@ -358,29 +356,29 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
         <div className="mt-5 space-y-3">
           {/* 'REGISTERED_SUCCESS' → show success: entityKey, txHash, swarmRef */}
           {result.status === "REGISTERED_SUCCESS" && (
-            <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4">
-              <div className="flex items-center gap-2.5 text-emerald-800">
-                <CheckCircle2 className="size-5 text-emerald-600" />
+            <div className="border-2 border-nb-black bg-nb-green-light p-4">
+              <div className="flex items-center gap-2.5 text-nb-black">
+                <CheckCircle2 className="size-5 text-nb-black" />
                 <h3 className="text-[15px] font-semibold">Image Registered Successfully</h3>
               </div>
-              <p className="mt-1 text-[13px] text-muted">
+              <p className="mt-1 text-[13px] text-nb-muted">
                 Original image anchored on Arkiv Web3 database with public unencrypted replica on
                 ETH Swarm.
               </p>
 
-              <div className="mt-3 divide-y divide-emerald-500/10 rounded-xl border border-emerald-500/20 bg-white p-3 text-[12.5px]">
+              <div className="mt-3 divide-y-2 divide-nb-black border-2 border-nb-black bg-nb-surface p-3 text-[12.5px]">
                 <div className="flex items-center justify-between py-1.5">
-                  <span className="text-muted">Entity Key</span>
-                  <div className="flex items-center gap-1.5 font-mono text-ink">
+                  <span className="text-nb-muted">Entity Key</span>
+                  <div className="flex items-center gap-1.5 font-mono text-nb-black">
                     <span>{truncateMiddle(result.entityKey, 10, 8)}</span>
                     <button
                       type="button"
                       onClick={() => copyToClipboard(result.entityKey, "entity")}
                       title="Copy Entity Key"
-                      className="text-muted hover:text-ink"
+                      className="text-nb-muted hover:text-nb-black"
                     >
                       {copiedKey === "entity" ? (
-                        <CheckCircle2 className="size-3.5 text-emerald-600" />
+                        <CheckCircle2 className="size-3.5 text-nb-black" />
                       ) : (
                         <Copy className="size-3.5" />
                       )}
@@ -389,17 +387,17 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
                 </div>
 
                 <div className="flex items-center justify-between py-1.5">
-                  <span className="text-muted">Transaction Hash</span>
-                  <div className="flex items-center gap-1.5 font-mono text-ink">
+                  <span className="text-nb-muted">Transaction Hash</span>
+                  <div className="flex items-center gap-1.5 font-mono text-nb-black">
                     <span>{truncateMiddle(result.txHash, 10, 8)}</span>
                     <button
                       type="button"
                       onClick={() => copyToClipboard(result.txHash, "tx")}
                       title="Copy Tx Hash"
-                      className="text-muted hover:text-ink"
+                      className="text-nb-muted hover:text-nb-black"
                     >
                       {copiedKey === "tx" ? (
-                        <CheckCircle2 className="size-3.5 text-emerald-600" />
+                        <CheckCircle2 className="size-3.5 text-nb-black" />
                       ) : (
                         <Copy className="size-3.5" />
                       )}
@@ -408,15 +406,15 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
                 </div>
 
                 <div className="flex items-center justify-between py-1.5">
-                  <span className="text-muted">Swarm Reference</span>
-                  <div className="flex items-center gap-1.5 font-mono text-ink">
+                  <span className="text-nb-muted">Swarm Reference</span>
+                  <div className="flex items-center gap-1.5 font-mono text-nb-black">
                     <span>{truncateMiddle(result.swarmRef, 10, 8)}</span>
                     <a
                       href={`https://api.gateway.ethswarm.org/bzz/${result.swarmRef}/`}
                       target="_blank"
                       rel="noreferrer"
                       title="Open in Swarm Gateway"
-                      className="inline-flex items-center gap-0.5 text-brand-teal hover:underline"
+                      className="inline-flex items-center gap-0.5 text-nb-black hover:underline"
                     >
                       <ExternalLink className="size-3.5" />
                     </a>
@@ -424,8 +422,8 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
                 </div>
 
                 <div className="flex items-center justify-between py-1.5">
-                  <span className="text-muted">pHash (64-bit DCT)</span>
-                  <span className="font-mono text-ink">{result.pHash}</span>
+                  <span className="text-nb-muted">pHash (64-bit DCT)</span>
+                  <span className="font-mono text-nb-black">{result.pHash}</span>
                 </div>
               </div>
             </div>
@@ -433,16 +431,16 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
 
           {/* 'ALREADY_REGISTERED' → show: "This image is already registered by [owner]" */}
           {result.status === "ALREADY_REGISTERED" && (
-            <div className="rounded-2xl border border-amber-500/20 bg-amber-500/5 p-4 text-amber-900">
+            <div className="border-2 border-nb-black bg-nb-orange-light p-4 text-nb-black">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="size-5 text-amber-600" />
+                <ShieldCheck className="size-5 text-nb-black" />
                 <h3 className="text-[15px] font-semibold">Already Registered</h3>
               </div>
               <p className="mt-2 text-[13.5px]">
                 This image is already registered by{" "}
                 <span className="font-mono font-semibold">{result.owner}</span>
               </p>
-              <p className="mt-1 text-[12px] text-muted">
+              <p className="mt-1 text-[12px] text-nb-muted">
                 Registered on: {new Date(result.registeredAt * 1000).toLocaleString()}
               </p>
             </div>
@@ -450,24 +448,24 @@ export function RegisterPanel({ onRegistered }: { onRegistered?: () => void }) {
 
           {/* 'MORPHING_DETECTED' → show warning: "Morphing attempt detected — similarity: X%, legitimate owner: [legitimateOwner]" also show incidentKey */}
           {result.status === "MORPHING_DETECTED" && (
-            <div className="rounded-2xl border border-rose-500/20 bg-rose-500/5 p-4 text-rose-900">
+            <div className="border-2 border-nb-black bg-nb-pink-light p-4 text-nb-black">
               <div className="flex items-center gap-2">
-                <ShieldAlert className="size-5 text-rose-600" />
+                <ShieldAlert className="size-5 text-nb-black" />
                 <h3 className="text-[15px] font-semibold">Morphing Attempt Detected</h3>
               </div>
               <p className="mt-2 text-[13.5px] font-medium">
                 Morphing attempt detected — similarity: {result.similarityPercent}%, legitimate
                 owner: <span className="font-mono font-semibold">{result.legitimateOwner}</span>
               </p>
-              <div className="mt-3 rounded-xl border border-rose-500/20 bg-white p-3 font-mono text-[12px]">
+              <div className="mt-3 border-2 border-nb-black bg-nb-surface p-3 font-mono text-[12px]">
                 <div className="flex items-center justify-between">
-                  <span className="text-muted">Incident Log Key:</span>
-                  <span className="font-bold text-rose-700">
+                  <span className="text-nb-muted">Incident Log Key:</span>
+                  <span className="font-bold text-nb-black">
                     {truncateMiddle(result.incidentKey, 12, 10)}
                   </span>
                 </div>
               </div>
-              <p className="mt-2 text-[11.5px] text-muted">
+              <p className="mt-2 text-[11.5px] text-nb-muted">
                 An immutable security incident was logged on Arkiv under the legitimate owner&apos;s
                 records.
               </p>

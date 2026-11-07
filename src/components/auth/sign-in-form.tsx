@@ -44,18 +44,19 @@ export function SignInForm() {
 
   return (
     <div className="w-full max-w-[400px]">
-      <h1 className="font-display text-[2rem] font-medium tracking-[-0.035em] text-ink">
+      <h1 className="font-display text-[2.6rem] leading-none font-extrabold tracking-[-0.04em] text-nb-black uppercase">
         Welcome back
       </h1>
-      <p className="mt-2 text-[15px] text-muted">Sign in to verify and protect your images.</p>
+      <p className="mt-3 text-[16px] text-nb-black/80">
+        Sign in to verify and protect your images.
+      </p>
 
       <button
         type="button"
         onClick={() => go("world-id", 1300)}
         disabled={busy}
-        className="group relative mt-8 flex h-12 w-full items-center justify-center gap-2.5 overflow-hidden rounded-2xl bg-ink text-[15px] font-semibold text-white transition-transform duration-300 hover:-translate-y-0.5 disabled:translate-y-0 disabled:opacity-90"
+        className="group relative mt-8 flex h-13 w-full nb-press items-center justify-center gap-2.5 border-[3px] border-nb-black bg-nb-black font-heading text-[16px] font-bold text-nb-white disabled:pointer-events-none disabled:opacity-80"
       >
-        <span className="absolute inset-0 bg-gradient-to-r from-brand-teal via-brand-aqua to-brand-cyan opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         <AnimatePresence mode="popLayout" initial={false}>
           {status === "world-id" ? (
             <motion.span
@@ -82,10 +83,10 @@ export function SignInForm() {
         </AnimatePresence>
       </button>
 
-      <div className="my-7 flex items-center gap-4 text-[12px] font-medium tracking-wide text-muted uppercase">
-        <span className="h-px flex-1 bg-line" />
+      <div className="my-7 flex items-center gap-4 font-mono text-[11px] tracking-[0.15em] text-nb-black uppercase">
+        <span className="h-[3px] flex-1 bg-nb-black" />
         or with email
-        <span className="h-px flex-1 bg-line" />
+        <span className="h-[3px] flex-1 bg-nb-black" />
       </div>
 
       <form
@@ -105,7 +106,7 @@ export function SignInForm() {
             placeholder="you@company.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="h-12 w-full rounded-2xl border border-line bg-white pr-4 pl-11 text-[15px] text-ink transition-[border-color,box-shadow] outline-none placeholder:text-muted/70 focus:border-brand-aqua focus:shadow-[0_0_0_4px_rgb(6_214_255/0.15)]"
+            className="h-12 w-full border-[3px] border-nb-black bg-nb-surface pr-4 pl-11 text-[15px] text-nb-black transition-[transform,box-shadow] duration-100 outline-none placeholder:text-nb-muted focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-nb"
           />
         </Field>
 
@@ -118,31 +119,33 @@ export function SignInForm() {
             placeholder="••••••••"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="h-12 w-full rounded-2xl border border-line bg-white pr-12 pl-11 text-[15px] text-ink transition-[border-color,box-shadow] outline-none placeholder:text-muted/70 focus:border-brand-aqua focus:shadow-[0_0_0_4px_rgb(6_214_255/0.15)]"
+            className="h-12 w-full border-[3px] border-nb-black bg-nb-surface pr-12 pl-11 text-[15px] text-nb-black transition-[transform,box-shadow] duration-100 outline-none placeholder:text-nb-muted focus:-translate-x-0.5 focus:-translate-y-0.5 focus:shadow-nb"
           />
           <button
             type="button"
             onClick={() => setShowPassword((s) => !s)}
             aria-label={showPassword ? "Hide password" : "Show password"}
-            className="absolute top-1/2 right-2 grid size-8 -translate-y-1/2 place-items-center rounded-xl text-muted transition-colors hover:bg-canvas hover:text-ink"
+            className="absolute top-1/2 right-2 grid size-8 -translate-y-1/2 place-items-center text-nb-muted transition-colors hover:bg-nb-yellow-light hover:text-nb-black"
           >
             {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
           </button>
         </Field>
 
         <div className="flex items-center justify-between pt-1 text-[13.5px]">
-          <label className="flex cursor-pointer items-center gap-2 text-ink/80 select-none">
-            <input type="checkbox" defaultChecked className="size-4 rounded accent-brand-teal" />
+          <label className="flex cursor-pointer items-center gap-2 text-nb-black/80 select-none">
+            <input type="checkbox" defaultChecked className="size-4 accent-nb-black" />
             Remember me
           </label>
-          <span className="text-muted">Demo mode</span>
+          <span className="border-2 border-nb-black bg-nb-yellow px-1.5 font-mono text-[11px] text-nb-black uppercase">
+            Demo mode
+          </span>
         </div>
 
         <button
           type="submit"
           disabled={busy}
           className={cn(
-            "group flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-brand-cyan text-[15px] font-semibold text-ink shadow-[0_10px_30px_-12px_rgb(6_214_255/0.9)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-aqua hover:text-white",
+            "group flex h-13 w-full nb-press items-center justify-center gap-2 border-[3px] border-nb-black bg-nb-yellow font-heading text-[16px] font-bold text-nb-black",
             busy && "pointer-events-none",
           )}
         >
@@ -159,16 +162,16 @@ export function SignInForm() {
         </button>
       </form>
 
-      <p className="mt-6 rounded-2xl bg-brand-cyan/[0.08] px-4 py-3 text-[13px] leading-relaxed text-brand-teal ring-1 ring-brand-cyan/20">
-        <strong className="font-semibold">Demo mode:</strong> no account needed — any credentials
-        (or none) open the verification dashboard.
+      <p className="mt-6 border-[3px] border-l-[10px] border-nb-black bg-nb-yellow-light px-4 py-3 text-[13.5px] leading-relaxed text-nb-black">
+        <strong className="font-heading font-bold">Demo mode:</strong> no account needed — any
+        credentials (or none) open the verification dashboard.
       </p>
 
-      <p className="mt-8 text-center text-[14px] text-muted">
+      <p className="mt-8 text-center text-[14px] text-nb-muted">
         New to UnMorph?{" "}
         <Link
           href="/#get-started"
-          className="font-semibold text-ink underline-offset-4 hover:underline"
+          className="font-heading font-bold text-nb-black underline decoration-2 underline-offset-4 hover:bg-nb-yellow"
         >
           Request access
         </Link>
@@ -190,11 +193,14 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={htmlFor} className="mb-1.5 block text-[13.5px] font-medium text-ink">
+      <label
+        htmlFor={htmlFor}
+        className="mb-2 block font-heading text-[14px] font-bold text-nb-black"
+      >
         {label}
       </label>
       <div className="relative">
-        <Icon className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-muted" />
+        <Icon className="pointer-events-none absolute top-1/2 left-4 z-10 size-4 -translate-y-1/2 text-nb-black" />
         {children}
       </div>
     </div>

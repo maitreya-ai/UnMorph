@@ -33,22 +33,20 @@ export function DashboardOverview() {
   const handleClose = useCallback(() => setSelected(null), []);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <motion.header
         id="dash-overview"
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+        className="flex flex-col gap-5 border-b-4 border-nb-black pb-7 sm:flex-row sm:items-end sm:justify-between"
       >
         <div>
-          <p className="text-[13px] font-medium text-brand-teal">
-            Welcome back, {mockUser.name.split(" ")[0]}
-          </p>
-          <h1 className="mt-1 font-display text-[1.85rem] leading-tight font-medium tracking-[-0.03em] text-ink">
+          <p className="nb-label bg-nb-yellow">Welcome back, {mockUser.name.split(" ")[0]}</p>
+          <h1 className="mt-4 font-heading text-[clamp(2rem,4vw,2.75rem)] leading-[1.05] font-bold tracking-[-0.02em] text-nb-black">
             Image verification
           </h1>
-          <p className="mt-1 text-[14px] text-muted">
+          <p className="mt-2 text-[15px] text-nb-black/80">
             Register originals, verify copies and review integrity history across your workspace.
           </p>
         </div>
@@ -56,17 +54,17 @@ export function DashboardOverview() {
           <button
             type="button"
             onClick={() => scrollToSection("dash-register")}
-            className="inline-flex h-11 shrink-0 items-center gap-2 rounded-xl border border-line bg-white px-4 text-[14px] font-semibold text-ink shadow-xs transition hover:bg-canvas"
+            className="inline-flex h-12 shrink-0 nb-press items-center gap-2 border-[3px] border-nb-black bg-nb-surface px-5 font-heading text-[15px] font-bold text-nb-black"
           >
-            <ImageUp className="size-4 text-brand-teal" />
+            <ImageUp className="size-4.5" strokeWidth={2.25} />
             Register an image
           </button>
           <button
             type="button"
             onClick={() => scrollToSection("dash-verify")}
-            className="inline-flex h-11 shrink-0 items-center gap-2 rounded-xl bg-ink px-4 text-[14px] font-semibold text-white shadow-[0_8px_24px_-10px_rgb(17_24_39/0.6)] transition-transform hover:-translate-y-0.5"
+            className="inline-flex h-12 shrink-0 nb-press items-center gap-2 border-[3px] border-nb-black bg-nb-yellow px-5 font-heading text-[15px] font-bold text-nb-black"
           >
-            <ScanSearch className="size-4 text-brand-cyan" />
+            <ScanSearch className="size-4.5" strokeWidth={2.25} />
             Verify an image
           </button>
         </div>
@@ -74,7 +72,7 @@ export function DashboardOverview() {
 
       <KpiTiles items={kpis} />
 
-      <div className="grid gap-6 xl:grid-cols-2">
+      <div className="grid gap-8 xl:grid-cols-2">
         <section id="dash-register" aria-label="Register an image">
           <RegisterPanel />
         </section>

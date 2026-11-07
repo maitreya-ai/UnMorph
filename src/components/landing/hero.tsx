@@ -26,7 +26,7 @@ const fadeUp = (delay: number) => ({
 const pillars = [
   { icon: ShieldCheck, label: "Authentic", tone: "bg-nb-green" },
   { icon: Layers, label: "Tamper-proof", tone: "bg-nb-blue" },
-  { icon: InfinityIcon, label: "Permanent", tone: "bg-nb-lavender" },
+  { icon: InfinityIcon, label: "Permanent", tone: "bg-nb-surface" },
 ];
 
 export function Hero() {
@@ -55,7 +55,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="overview"
-      className="relative isolate overflow-x-clip pt-32 pb-20 sm:pt-40 sm:pb-28"
+      className="relative isolate overflow-x-clip border-b-4 border-nb-black bg-nb-yellow pt-16 pb-24 sm:pt-24 sm:pb-32"
     >
       <HeroBackdrop progress={scrollYProgress} pointer={pointer} />
 
@@ -64,26 +64,25 @@ export function Hero() {
         className="relative mx-auto max-w-5xl px-5 text-center sm:px-6"
       >
         <motion.div {...fadeUp(0.1)} className="flex justify-center">
-          <span className="inline-flex items-center gap-2 border-[3px] border-nb-black bg-nb-surface py-1.5 pr-4 pl-1.5 font-heading text-[12px] font-bold uppercase tracking-wide text-nb-black shadow-nb-sm">
-            <span className="bg-nb-yellow px-2 py-0.5 text-[11px] font-bold">New</span>
-            Image integrity layer, now in private beta
+          <span className="nb-label bg-nb-pink">
+            New · Image integrity layer, now in private beta
           </span>
         </motion.div>
 
-        <h1 className="mt-8 font-display text-[clamp(1.85rem,5vw,4rem)] leading-[1.06] font-extrabold tracking-[-0.03em] text-nb-black uppercase">
+        <h1 className="mt-8 text-[clamp(1.45rem,6vw,4.4rem)] leading-[1.06] text-nb-black uppercase">
           <RevealWords text="Prevent morphing." immediate delay={0.2} />
           <br />
           <RevealWords
             text="Prove authenticity."
             immediate
             delay={0.42}
-            wordClassName="bg-nb-yellow border-[3px] border-nb-black px-1.5 inline-block shadow-nb-sm"
+            wordClassName="bg-nb-surface border-[3px] border-nb-black px-2 inline-block shadow-nb"
           />
         </h1>
 
         <motion.p
           {...fadeUp(0.75)}
-          className="mx-auto mt-8 max-w-2xl text-[1.0625rem] leading-relaxed text-pretty text-nb-muted sm:text-lg"
+          className="mx-auto mt-8 max-w-2xl font-heading text-[1.2rem] leading-[1.45] font-medium text-pretty text-nb-black sm:text-[1.45rem]"
         >
           UnMorph fingerprints original images, anchors that proof on decentralized infrastructure,
           and exposes any manipulation — from subtle retouching to AI-generated alterations.
@@ -95,7 +94,7 @@ export function Hero() {
         >
           <Link
             href="/sign-in"
-            className="nb-press group inline-flex h-13 items-center gap-2 border-[3px] border-nb-black bg-nb-yellow px-7 font-heading text-[15px] font-bold uppercase tracking-wide text-nb-black"
+            className="group inline-flex h-14 nb-press items-center gap-2 border-[3px] border-nb-black bg-nb-black px-7 font-heading text-[17px] font-bold text-nb-white"
           >
             Start verifying
             <ArrowRight className="size-4 transition-transform duration-150 group-hover:translate-x-1" />
@@ -103,7 +102,7 @@ export function Hero() {
           <Link
             href="/#how-it-works"
             onClick={(e) => onSectionClick(e, "how-it-works")}
-            className="nb-press inline-flex h-13 items-center gap-2 border-[3px] border-nb-black bg-nb-surface px-7 font-heading text-[15px] font-bold uppercase tracking-wide text-nb-black"
+            className="inline-flex h-14 nb-press items-center gap-2 border-[3px] border-nb-black bg-nb-surface px-7 font-heading text-[17px] font-bold text-nb-black"
           >
             See how it works
           </Link>
@@ -117,7 +116,7 @@ export function Hero() {
             <li
               key={label}
               className={cn(
-                "inline-flex items-center gap-2 border-[3px] border-nb-black px-4 py-2 font-heading text-[13px] font-bold uppercase tracking-wide text-nb-black shadow-nb-sm",
+                "inline-flex items-center gap-2 border-2 border-nb-black px-3 py-1.5 font-mono text-[12px] tracking-[0.05em] text-nb-black uppercase shadow-nb-sm",
                 tone,
               )}
             >
@@ -167,25 +166,25 @@ function HeroBackdrop({ progress, pointer }: { progress: MotionValue<number>; po
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-      <div className="absolute inset-0 bg-grid opacity-60" />
+      <div className="absolute inset-0 bg-dots opacity-50" />
 
       {/* hard-edged colour slabs — flat fills, black outlines, zero blur */}
       <motion.div style={{ y: slabA }} className="absolute top-24 -left-28 hidden md:block">
         <motion.div
           style={{ x: px1, y: py1 }}
-          className="h-[560px] w-[230px] rotate-[-16deg] border-[3px] border-nb-black bg-nb-yellow"
+          className="h-[560px] w-[230px] rotate-[-16deg] border-[3px] border-nb-black bg-nb-pink shadow-nb-lg"
         />
       </motion.div>
       <motion.div style={{ y: slabC }} className="absolute top-56 left-16 hidden lg:block">
         <motion.div
           style={{ x: px2, y: py2 }}
-          className="h-[300px] w-[120px] rotate-[-16deg] border-[3px] border-nb-black bg-nb-lavender"
+          className="h-[300px] w-[120px] rotate-[-16deg] border-[3px] border-nb-black bg-nb-surface shadow-nb-lg"
         />
       </motion.div>
       <motion.div style={{ y: slabB }} className="absolute top-10 -right-24 hidden md:block">
         <motion.div
           style={{ x: px2, y: py1 }}
-          className="h-[620px] w-[260px] rotate-[14deg] border-[3px] border-nb-black bg-nb-blue"
+          className="h-[620px] w-[260px] rotate-[14deg] border-[3px] border-nb-black bg-nb-blue shadow-nb-lg"
         />
       </motion.div>
     </div>
@@ -203,14 +202,17 @@ function FloatingChips({ pointer, progress }: { pointer: Pointer; progress: Moti
 
   return (
     <div aria-hidden className="pointer-events-none absolute inset-0 hidden lg:block">
-      <Chip style={{ y: deep }} inner={{ x: pxA, y: pyA }} className="top-[38%] -left-14" delay={1.4}>
+      <Chip
+        style={{ y: deep }}
+        inner={{ x: pxA, y: pyA }}
+        className="top-[38%] -left-14"
+        delay={1.4}
+      >
         <span className="grid size-9 place-items-center border-[2px] border-nb-black bg-nb-black text-nb-yellow">
           <ScanFace className="size-4" />
         </span>
         <span>
-          <span className="block font-heading text-[12px] font-bold uppercase text-nb-black">
-            World ID
-          </span>
+          <span className="block font-heading text-[13px] font-bold text-nb-black">World ID</span>
           <span className="block text-[11px] text-nb-muted">Verified unique human</span>
         </span>
       </Chip>
@@ -219,20 +221,23 @@ function FloatingChips({ pointer, progress }: { pointer: Pointer; progress: Moti
           <HardDrive className="size-4" />
         </span>
         <span>
-          <span className="block font-heading text-[12px] font-bold uppercase text-nb-black">
-            0G Storage
-          </span>
+          <span className="block font-heading text-[13px] font-bold text-nb-black">0G Storage</span>
           <span className="block font-mono text-[10.5px] text-nb-muted">
             root 0x4be1…09fa · pinned
           </span>
         </span>
       </Chip>
-      <Chip style={{ y: near }} inner={{ x: pxA, y: pyB }} className="-bottom-7 left-[24%]" delay={1.8}>
+      <Chip
+        style={{ y: near }}
+        inner={{ x: pxA, y: pyB }}
+        className="-bottom-7 left-[24%]"
+        delay={1.8}
+      >
         <span className="grid size-9 place-items-center border-[2px] border-nb-black bg-nb-green text-nb-black">
           <Layers className="size-4" />
         </span>
         <span>
-          <span className="block font-heading text-[12px] font-bold uppercase text-nb-black">
+          <span className="block font-heading text-[13px] font-bold text-nb-black">
             Anchored on Arkiv
           </span>
           <span className="block font-mono text-[10.5px] text-nb-muted">

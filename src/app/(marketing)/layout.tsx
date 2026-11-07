@@ -1,11 +1,11 @@
 import { Footer } from "@/components/landing/footer";
-import { DynamicIsland } from "@/components/nav/dynamic-island";
+import { SiteNav } from "@/components/nav/site-nav";
 import { SmoothScroll } from "@/components/providers/smooth-scroll";
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
     <SmoothScroll>
-      <DynamicIsland />
+      <SiteNav />
       <main className="relative overflow-x-clip">{children}</main>
       <Footer />
     </SmoothScroll>

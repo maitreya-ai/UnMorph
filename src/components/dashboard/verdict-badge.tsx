@@ -11,7 +11,7 @@ export const verdictMeta: Record<
     /** chart / dot fill */
     fill: string;
     hex: string;
-    badge: string;
+    /** pastel surface for callouts */
     soft: string;
   }
 > = {
@@ -20,31 +20,28 @@ export const verdictMeta: Record<
     description: "Matches a registered original",
     icon: ShieldCheck,
     fill: "bg-verdict-authentic",
-    hex: "#0891B2",
-    badge: "bg-cyan-50 text-cyan-900 ring-cyan-600/20",
-    soft: "bg-cyan-50 text-cyan-700",
+    hex: "#88D498",
+    soft: "bg-nb-green-light",
   },
   tampered: {
     label: "Tampered",
     description: "Altered after registration",
     icon: ShieldX,
     fill: "bg-verdict-tampered",
-    hex: "#E11D48",
-    badge: "bg-rose-50 text-rose-900 ring-rose-600/20",
-    soft: "bg-rose-50 text-rose-600",
+    hex: "#FF6B6B",
+    soft: "bg-nb-pink-light",
   },
   unregistered: {
     label: "Unregistered",
     description: "No registry record found",
     icon: ShieldQuestionMark,
     fill: "bg-verdict-unregistered",
-    hex: "#F59E0B",
-    badge: "bg-amber-50 text-amber-900 ring-amber-600/25",
-    soft: "bg-amber-50 text-amber-600",
+    hex: "#FFA552",
+    soft: "bg-nb-orange-light",
   },
 };
 
-/** Status is never colour-alone: icon + label + tint. */
+/** Status is never colour-alone: icon + label + flat fill, in the reference `.badge` style. */
 export function VerdictBadge({
   verdict,
   size = "sm",
@@ -59,13 +56,15 @@ export function VerdictBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full font-medium whitespace-nowrap ring-1 ring-inset",
-        size === "sm" ? "px-2 py-0.5 text-[12px]" : "px-3 py-1 text-[13px]",
-        meta.badge,
+        "inline-flex items-center gap-1.5 border-2 border-nb-black font-mono whitespace-nowrap text-nb-black uppercase",
+        size === "sm"
+          ? "px-2 py-0.5 text-[11px] tracking-[0.05em]"
+          : "px-2.5 py-1 text-[12px] tracking-[0.05em] shadow-nb-sm",
+        meta.fill,
         className,
       )}
     >
-      <Icon className={size === "sm" ? "size-3.5" : "size-4"} />
+      <Icon className={size === "sm" ? "size-3.5" : "size-4"} strokeWidth={2.25} />
       {meta.label}
     </span>
   );

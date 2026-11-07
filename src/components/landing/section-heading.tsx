@@ -10,6 +10,10 @@ type SectionHeadingProps = {
   className?: string;
 };
 
+/**
+ * neubrutalism.com section opener: a Space Mono `.section-label` chip, a
+ * Space Grotesk 700 heading (sentence case, tight tracking) and a calm intro.
+ */
 export function SectionHeading({
   eyebrow,
   title,
@@ -23,21 +27,15 @@ export function SectionHeading({
     <div className={cn(center && "mx-auto text-center", "max-w-3xl", className)}>
       <Reveal y={12}>
         <p className={cn("flex", center && "justify-center")}>
-          <span
-            className={cn(
-              "inline-block border-[3px] border-nb-black bg-nb-yellow px-3 py-1 font-heading text-[12px] font-bold tracking-[0.18em] uppercase text-nb-black",
-              tone === "dark" && "shadow-[3px_3px_0_0_#FFFDF5]",
-              tone === "light" && "shadow-nb-sm",
-            )}
-          >
+          <span className={cn("nb-label", tone === "dark" && "shadow-nb-inverse-sm")}>
             {eyebrow}
           </span>
         </p>
       </Reveal>
       <h2
         className={cn(
-          "mt-6 font-display text-[clamp(2rem,4.6vw,3.5rem)] leading-[1.02] font-extrabold tracking-[-0.03em] uppercase",
-          tone === "light" ? "text-nb-black" : "text-nb-bg",
+          "mt-6 text-[clamp(2.1rem,5vw,3.5rem)] leading-[1.05]",
+          tone === "light" ? "text-nb-black" : "text-nb-white",
         )}
       >
         <RevealWords text={title} />
@@ -46,9 +44,9 @@ export function SectionHeading({
         <Reveal delay={0.15}>
           <p
             className={cn(
-              "mt-5 text-[1.0625rem] leading-relaxed text-pretty",
+              "mt-5 text-[1.125rem] leading-[1.65] text-pretty sm:text-[1.25rem]",
               center && "mx-auto max-w-2xl",
-              tone === "light" ? "text-nb-muted" : "text-nb-bg/70",
+              tone === "light" ? "text-nb-black" : "text-nb-white/85",
             )}
           >
             {description}

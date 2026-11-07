@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DynamicIsland } from "@/components/nav/dynamic-island";
+import { SiteNav } from "@/components/nav/site-nav";
 import { NotFoundView } from "@/components/not-found/not-found-view";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <>
-      <DynamicIsland pageLabel="Page not found" />
+      <SiteNav pageLabel="404 · Not verified" />
       <NotFoundView />
     </>
   );
