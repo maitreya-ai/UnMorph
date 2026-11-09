@@ -24,7 +24,7 @@ export default function SignInPage() {
           <Logo className="lg:invisible" />
           <Link
             href="/"
-            className="group inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-[13.5px] font-medium text-muted transition-colors hover:bg-white hover:text-ink"
+            className="group inline-flex items-center gap-1.5 border-[2px] border-transparent px-3 py-2 font-heading text-[12.5px] font-bold text-nb-muted uppercase transition-colors hover:border-nb-black hover:bg-nb-surface hover:text-nb-black"
           >
             <ArrowLeft className="size-4 transition-transform duration-300 group-hover:-translate-x-0.5" />
             Back to home
@@ -35,7 +35,7 @@ export default function SignInPage() {
           <SignInForm />
         </main>
 
-        <p className="relative text-center text-[12.5px] text-muted">
+        <p className="relative text-center text-[12.5px] text-nb-muted">
           Protected by World ID · Records on Arkiv · Storage on 0G
         </p>
       </div>

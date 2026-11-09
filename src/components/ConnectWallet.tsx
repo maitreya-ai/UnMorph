@@ -4,7 +4,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { useAccount, useConnect, useDisconnect, useEnsName } from "wagmi";
 import type { Connector } from "wagmi";
 import { ExternalLink, Loader2, LogOut, Wallet, X } from "lucide-react";
-import { truncateMiddle } from "@/lib/utils";
+import { cn, truncateMiddle } from "@/lib/utils";
 
 const subscribeNoop = () => () => {};
 
@@ -64,9 +64,12 @@ export function ConnectWallet({ className = "" }: { className?: string }) {
     return (
       <button
         type="button"
-        className={`inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-ink px-4 text-[13.5px] font-semibold text-white shadow-xs transition hover:bg-ink-soft ${className}`}
+        className={cn(
+          "nb-press-sm inline-flex h-10 items-center justify-center gap-2 border-[3px] border-nb-black bg-nb-yellow px-4 font-heading text-[12.5px] font-bold uppercase tracking-wide text-nb-black",
+          className,
+        )}
       >
-        <Wallet className="size-4 text-brand-cyan" />
+        <Wallet className="size-4" />
         <span>Connect Wallet</span>
       </button>
     );
@@ -77,14 +80,17 @@ export function ConnectWallet({ className = "" }: { className?: string }) {
 
     return (
       <div
-        className={`inline-flex items-center gap-2 rounded-xl border border-line/80 bg-white px-2.5 py-1.5 shadow-xs ${className}`}
+        className={cn(
+          "inline-flex items-center gap-2 border-[3px] border-nb-black bg-nb-green px-2.5 py-1.5 shadow-nb-sm",
+          className,
+        )}
       >
-        <span className="flex size-2 rounded-full bg-emerald-500" />
-        <span className="font-mono text-[13px] font-medium text-ink" title={displayAddress}>
+        <span className="flex size-2 border border-nb-black bg-nb-black" />
+        <span className="font-mono text-[13px] font-bold text-nb-black" title={displayAddress}>
           {displayName}
         </span>
         {activeConnector?.name && (
-          <span className="rounded-md bg-canvas px-1.5 py-0.5 text-[11px] font-medium text-muted">
+          <span className="border-[2px] border-nb-black bg-nb-surface px-1.5 py-0.5 font-heading text-[10px] font-bold uppercase text-nb-black">
             {activeConnector.name}
           </span>
         )}
@@ -92,7 +98,7 @@ export function ConnectWallet({ className = "" }: { className?: string }) {
           type="button"
           onClick={() => disconnect()}
           title="Disconnect wallet"
-          className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[12px] font-medium text-muted transition hover:bg-canvas hover:text-rose-600"
+          className="inline-flex items-center gap-1 border-[2px] border-nb-black bg-nb-surface px-2 py-1 font-heading text-[11px] font-bold uppercase text-nb-black transition-colors hover:bg-nb-pink"
         >
           <LogOut className="size-3.5" />
           <span>Disconnect</span>
@@ -110,16 +116,19 @@ export function ConnectWallet({ className = "" }: { className?: string }) {
           setModalOpen(true);
         }}
         disabled={isPending}
-        className={`inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-ink px-4 text-[13.5px] font-semibold text-white shadow-xs transition hover:bg-ink-soft active:scale-[0.98] disabled:cursor-wait disabled:opacity-80 ${className}`}
+        className={cn(
+          "nb-press-sm inline-flex h-10 items-center justify-center gap-2 border-[3px] border-nb-black bg-nb-yellow px-4 font-heading text-[12.5px] font-bold uppercase tracking-wide text-nb-black disabled:cursor-wait disabled:opacity-80",
+          className,
+        )}
       >
         {isPending ? (
           <>
-            <Loader2 className="size-4 animate-spin text-brand-cyan" />
+            <Loader2 className="size-4 animate-spin" />
             <span>Connecting…</span>
           </>
         ) : (
           <>
-            <Wallet className="size-4 text-brand-cyan" />
+            <Wallet className="size-4" />
             <span>Connect Wallet</span>
           </>
         )}
@@ -128,38 +137,38 @@ export function ConnectWallet({ className = "" }: { className?: string }) {
       {/* Wallet Selection Modal */}
       {modalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-4 backdrop-blur-xs"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-nb-black/50 p-4"
           role="dialog"
           aria-modal="true"
           onClick={() => setModalOpen(false)}
         >
           <div
-            className="w-full max-w-sm rounded-2xl border border-line/80 bg-white p-5 shadow-2xl transition-all"
+            className="w-full max-w-sm border-[3px] border-nb-black bg-nb-surface p-5 shadow-nb-xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between border-b border-line/70 pb-3">
+            <div className="flex items-center justify-between border-b-[3px] border-nb-black pb-3">
               <div className="flex items-center gap-2">
-                <Wallet className="size-5 text-brand-teal" />
-                <h3 className="font-display text-[16px] font-semibold text-ink">
+                <Wallet className="size-5 text-nb-black" />
+                <h3 className="font-display text-[16px] font-extrabold uppercase text-nb-black">
                   Connect a Wallet
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setModalOpen(false)}
-                className="rounded-lg p-1 text-muted transition hover:bg-canvas hover:text-ink"
+                className="border-[2px] border-nb-black bg-nb-surface p-1 text-nb-black transition hover:bg-nb-pink"
                 title="Close"
               >
                 <X className="size-4" />
               </button>
             </div>
 
-            <p className="mt-2.5 text-[12.5px] text-muted">
+            <p className="mt-2.5 text-[12.5px] text-nb-muted">
               Choose your Ethereum wallet extension or browser provider to connect.
             </p>
 
             {connectError && (
-              <div className="mt-3 rounded-xl bg-rose-50 p-2.5 text-[12px] text-rose-700">
+              <div className="mt-3 border-[2px] border-nb-black bg-nb-pink p-2.5 text-[12px] font-medium text-nb-black">
                 {connectError}
               </div>
             )}
@@ -175,7 +184,7 @@ export function ConnectWallet({ className = "" }: { className?: string }) {
                       type="button"
                       onClick={() => handleSelectConnector(connector)}
                       disabled={isPending}
-                      className="flex w-full items-center justify-between gap-3 rounded-xl border border-line/80 bg-canvas/40 px-3.5 py-2.5 text-left text-[13.5px] font-medium text-ink transition hover:border-brand-aqua/80 hover:bg-brand-cyan/[0.04] disabled:opacity-60"
+                      className="nb-press-sm flex w-full items-center justify-between gap-3 border-[2px] border-nb-black bg-nb-surface px-3.5 py-2.5 text-left text-[13.5px] font-bold text-nb-black transition hover:bg-nb-yellow disabled:opacity-60"
                     >
                       <div className="flex items-center gap-2.5">
                         {connector.icon ? (
@@ -183,10 +192,10 @@ export function ConnectWallet({ className = "" }: { className?: string }) {
                           <img
                             src={connector.icon}
                             alt=""
-                            className="size-5 shrink-0 rounded-md object-contain"
+                            className="size-5 shrink-0 border border-nb-black object-contain"
                           />
                         ) : (
-                          <div className="bg-canvas-muted grid size-5 place-items-center rounded-md text-brand-teal">
+                          <div className="grid size-5 place-items-center border border-nb-black bg-nb-blue text-nb-black">
                             <Wallet className="size-3.5" />
                           </div>
                         )}
@@ -194,23 +203,25 @@ export function ConnectWallet({ className = "" }: { className?: string }) {
                       </div>
 
                       {isConnectingThis ? (
-                        <Loader2 className="size-4 animate-spin text-brand-teal" />
+                        <Loader2 className="size-4 animate-spin" />
                       ) : (
-                        <span className="text-[11px] font-normal text-muted">Connect</span>
+                        <span className="text-[11px] font-normal text-nb-muted uppercase">
+                          Connect
+                        </span>
                       )}
                     </button>
                   );
                 })
               ) : (
-                <div className="py-4 text-center text-[13px] text-muted">
+                <div className="border-[2px] border-dashed border-nb-black py-4 text-center text-[13px] text-nb-muted">
                   No Ethereum wallet extensions detected.
                 </div>
               )}
             </div>
 
-            <div className="mt-4 flex items-center justify-between border-t border-line/70 pt-3 text-[11.5px] text-muted">
+            <div className="mt-4 flex items-center justify-between border-t-[3px] border-nb-black pt-3 text-[11.5px] text-nb-muted">
               <span>Need a wallet?</span>
-              <div className="flex items-center gap-2 font-medium text-brand-teal">
+              <div className="flex items-center gap-2 font-bold text-nb-black">
                 <a
                   href="https://metamask.io/download/"
                   target="_blank"

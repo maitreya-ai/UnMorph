@@ -21,7 +21,7 @@ export default function RegisterPage() {
           <div className="flex items-center gap-2">
             <Link
               href="/dashboard"
-              className="inline-flex items-center gap-1.5 text-[13px] font-medium text-muted transition-colors hover:text-ink"
+              className="inline-flex items-center gap-1.5 font-heading text-[13px] font-bold text-nb-muted uppercase transition-colors hover:text-nb-black"
             >
               <ArrowLeft className="size-4" /> Back to Dashboard
             </Link>

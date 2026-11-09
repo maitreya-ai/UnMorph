@@ -9,15 +9,17 @@ import { mockUser } from "@/lib/mock-data";
 
 export function Topbar() {
   return (
-    <header className="sticky top-0 z-30 border-b border-line/70 bg-canvas/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-30 border-b-[3px] border-nb-black bg-nb-bg">
       <div className="flex h-16 items-center gap-3 px-4 sm:px-6 lg:px-8">
         <Link href="/" aria-label="UnMorph home" className="lg:hidden">
           <LogoMark size={26} />
         </Link>
         <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[13.5px]">
-          <span className="hidden text-muted sm:inline">{mockUser.workspace}</span>
-          <ChevronRight className="hidden size-3.5 text-muted/60 sm:inline" />
-          <span className="font-semibold text-ink">Image verification</span>
+          <span className="hidden text-nb-muted uppercase sm:inline">{mockUser.workspace}</span>
+          <ChevronRight className="hidden size-3.5 text-nb-black/40 sm:inline" />
+          <span className="font-heading font-bold text-nb-black uppercase">
+            Image verification
+          </span>
         </nav>
 
         <div className="ml-auto flex items-center gap-2">
@@ -25,15 +27,15 @@ export function Topbar() {
           <button
             type="button"
             aria-label="Notifications"
-            className="relative hidden size-9 place-items-center rounded-xl text-muted ring-1 ring-line transition-colors hover:bg-white hover:text-ink sm:grid"
+            className="nb-press-sm relative hidden size-9 place-items-center border-[3px] border-nb-black bg-nb-surface text-nb-black sm:grid"
           >
             <Bell className="size-4" />
-            <span className="absolute top-2 right-2 size-1.5 rounded-full bg-verdict-tampered ring-2 ring-canvas" />
+            <span className="absolute top-1.5 right-1.5 size-2 border border-nb-black bg-nb-pink" />
           </button>
           <Link
             href="/"
             aria-label="Sign out"
-            className="grid size-9 place-items-center rounded-xl text-muted ring-1 ring-line transition-colors hover:bg-white hover:text-ink lg:hidden"
+            className="nb-press-sm grid size-9 place-items-center border-[3px] border-nb-black bg-nb-surface text-nb-black lg:hidden"
           >
             <LogOut className="size-4" />
           </Link>
@@ -50,9 +52,9 @@ export function Topbar() {
             key={id}
             type="button"
             onClick={() => scrollToSection(id)}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[12.5px] font-medium text-ink/80 ring-1 ring-line"
+            className="inline-flex shrink-0 items-center gap-1.5 border-[2px] border-nb-black bg-nb-surface px-3 py-1.5 font-heading text-[12px] font-bold text-nb-black uppercase"
           >
-            <Icon className="size-3.5 text-brand-teal" />
+            <Icon className="size-3.5" />
             {label}
           </button>
         ))}

@@ -22,6 +22,7 @@ import {
 export function DashboardOverview() {
   const [items, setItems] = useState<Verification[]>(recentVerifications);
   const [selected, setSelected] = useState<Verification | null>(null);
+  const [incidentSignal, setIncidentSignal] = useState(0);
   const added = items.length - recentVerifications.length;
 
   // Transient UI resets when Next hides this route with <Activity>.
@@ -31,6 +32,9 @@ export function DashboardOverview() {
     setItems((prev) => [record, ...prev]);
   }, []);
   const handleClose = useCallback(() => setSelected(null), []);
+  // Bumped whenever register or verify logs a new incident on Arkiv — the incidents table
+  // debounces its own re-fetch off this to give Arkiv time to index the write.
+  const handleIncidentReported = useCallback(() => setIncidentSignal((s) => s + 1), []);
 
   return (
     <div className="space-y-6">
@@ -42,13 +46,13 @@ export function DashboardOverview() {
         className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
       >
         <div>
-          <p className="text-[13px] font-medium text-brand-teal">
+          <p className="font-heading text-[13px] font-bold tracking-wide text-nb-black uppercase">
             Welcome back, {mockUser.name.split(" ")[0]}
           </p>
-          <h1 className="mt-1 font-display text-[1.85rem] leading-tight font-medium tracking-[-0.03em] text-ink">
+          <h1 className="mt-1 font-display text-[1.85rem] leading-tight font-extrabold tracking-[-0.03em] text-nb-black uppercase">
             Image verification
           </h1>
-          <p className="mt-1 text-[14px] text-muted">
+          <p className="mt-1 text-[14px] text-nb-muted">
             Register originals, verify copies and review integrity history across your workspace.
           </p>
         </div>
@@ -56,17 +60,17 @@ export function DashboardOverview() {
           <button
             type="button"
             onClick={() => scrollToSection("dash-register")}
-            className="inline-flex h-11 shrink-0 items-center gap-2 rounded-xl border border-line bg-white px-4 text-[14px] font-semibold text-ink shadow-xs transition hover:bg-canvas"
+            className="nb-press-sm inline-flex h-11 shrink-0 items-center gap-2 border-[3px] border-nb-black bg-nb-surface px-4 font-heading text-[13px] font-bold text-nb-black uppercase"
           >
-            <ImageUp className="size-4 text-brand-teal" />
+            <ImageUp className="size-4" />
             Register an image
           </button>
           <button
             type="button"
             onClick={() => scrollToSection("dash-verify")}
-            className="inline-flex h-11 shrink-0 items-center gap-2 rounded-xl bg-ink px-4 text-[14px] font-semibold text-white shadow-[0_8px_24px_-10px_rgb(17_24_39/0.6)] transition-transform hover:-translate-y-0.5"
+            className="nb-press-sm inline-flex h-11 shrink-0 items-center gap-2 border-[3px] border-nb-black bg-nb-yellow px-4 font-heading text-[13px] font-bold text-nb-black uppercase"
           >
-            <ScanSearch className="size-4 text-brand-cyan" />
+            <ScanSearch className="size-4" />
             Verify an image
           </button>
         </div>
@@ -76,15 +80,20 @@ export function DashboardOverview() {
 
       <div className="grid gap-6 xl:grid-cols-2">
         <section id="dash-register" aria-label="Register an image">
-          <RegisterPanel />
+          <RegisterPanel onIncidentReported={handleIncidentReported} />
         </section>
         <section id="dash-verify" aria-label="Verify an image">
-          <VerifyPanel onComplete={handleComplete} onOpen={setSelected} sequence={added} />
+          <VerifyPanel
+            onComplete={handleComplete}
+            onOpen={setSelected}
+            sequence={added}
+            onIncidentReported={handleIncidentReported}
+          />
         </section>
       </div>
 
       <section id="dash-incidents" aria-label="Morphing incident log">
-        <IncidentsTable />
+        <IncidentsTable refreshSignal={incidentSignal} />
       </section>
 
       <section id="dash-activity" aria-label="Verification activity">

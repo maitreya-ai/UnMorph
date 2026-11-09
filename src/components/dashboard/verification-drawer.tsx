@@ -56,7 +56,7 @@ export function VerificationDrawer({
           aria-labelledby="drawer-title"
         >
           <motion.div
-            className="absolute inset-0 bg-ink/30 backdrop-blur-[2px]"
+            className="absolute inset-0 bg-nb-black/50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -67,14 +67,14 @@ export function VerificationDrawer({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 340, damping: 36 }}
-            className="absolute inset-y-0 right-0 flex w-full max-w-[460px] flex-col overflow-hidden bg-white shadow-2xl sm:inset-y-3 sm:right-3 sm:rounded-[28px]"
+            className="absolute inset-y-0 right-0 flex w-full max-w-[460px] flex-col overflow-hidden border-l-[3px] border-nb-black bg-nb-surface shadow-nb-xl sm:inset-y-3 sm:right-3 sm:border-[3px]"
           >
-            <header className="flex items-start justify-between gap-4 border-b border-line/70 p-5">
+            <header className="flex items-start justify-between gap-4 border-b-[3px] border-nb-black p-5">
               <div className="min-w-0">
-                <p className="text-[12px] text-muted">{item.id} · Integrity report</p>
+                <p className="text-[12px] text-nb-muted">{item.id} · Integrity report</p>
                 <h2
                   id="drawer-title"
-                  className="mt-0.5 truncate font-display text-lg font-medium tracking-tight text-ink"
+                  className="mt-0.5 truncate font-display text-lg font-extrabold tracking-tight text-nb-black uppercase"
                 >
                   {item.fileName}
                 </h2>
@@ -84,20 +84,20 @@ export function VerificationDrawer({
                 type="button"
                 onClick={onClose}
                 aria-label="Close report"
-                className="grid size-9 shrink-0 place-items-center rounded-xl text-muted ring-1 ring-line transition-colors hover:bg-canvas hover:text-ink"
+                className="nb-press-sm grid size-9 shrink-0 place-items-center border-[2px] border-nb-black text-nb-black"
               >
                 <X className="size-4" />
               </button>
             </header>
 
             <div className="flex-1 overflow-y-auto p-5">
-              <div className="relative aspect-[16/10] overflow-hidden rounded-2xl ring-1 ring-line/70">
+              <div className="relative aspect-[16/10] overflow-hidden border-[3px] border-nb-black">
                 <Landscape variant={item.scene} tampered={item.verdict === "tampered"} />
                 {item.verdict === "tampered" &&
                   TAMPER_REGIONS.slice(0, Math.min(2, item.alteredRegions)).map((r) => (
                     <span
                       key={r.id}
-                      className="absolute rounded-md border-2 border-verdict-tampered bg-verdict-tampered/15"
+                      className="absolute border-[3px] border-nb-black bg-verdict-tampered/25"
                       style={{
                         left: `${r.left}%`,
                         top: `${r.top}%`,
@@ -111,14 +111,14 @@ export function VerificationDrawer({
               <div className="mt-5 flex items-center justify-between">
                 <VerdictBadge verdict={item.verdict} size="md" />
                 <p className="text-right">
-                  <span className="block text-[12px] text-muted">Confidence</span>
-                  <span className="text-xl font-semibold text-ink">
+                  <span className="block text-[12px] text-nb-muted">Confidence</span>
+                  <span className="font-display text-xl font-extrabold text-nb-black">
                     {item.confidence.toFixed(1)}%
                   </span>
                 </p>
               </div>
 
-              <dl className="mt-5 divide-y divide-line/70 rounded-2xl bg-canvas/70 px-4 text-[13px] ring-1 ring-line/60">
+              <dl className="mt-5 divide-y-[2px] divide-nb-black border-[2px] border-nb-black bg-nb-bg px-4 text-[13px]">
                 <Row label="SHA-256" value={item.sha256} mono copy />
                 <Row label="Perceptual hash" value={item.perceptualHash} mono />
                 <Row label="Arkiv record" value={item.arkivRecord} mono copy />
@@ -133,28 +133,28 @@ export function VerificationDrawer({
                 <Row label="Source" value={item.source} />
               </dl>
 
-              <h3 className="mt-6 font-display text-[14px] font-medium text-ink">
+              <h3 className="mt-6 font-display text-[14px] font-extrabold text-nb-black uppercase">
                 Integrity history
               </h3>
-              <ol className="relative mt-3 space-y-4 border-l border-line pl-5">
+              <ol className="relative mt-3 space-y-4 border-l-[2px] border-nb-black pl-5">
                 {item.history.map((event, i) => {
                   const Icon = historyIcon[event.type];
                   return (
                     <li key={i} className="relative">
                       <span
                         className={cn(
-                          "absolute top-0.5 -left-[31px] grid size-5 place-items-center rounded-full bg-white ring-1",
+                          "absolute top-0.5 -left-[31px] grid size-5 place-items-center border-[2px] border-nb-black",
                           event.type === "tamper-detected"
-                            ? "text-verdict-tampered ring-rose-200"
+                            ? "bg-nb-pink text-nb-black"
                             : event.type === "lookup-miss"
-                              ? "text-amber-600 ring-amber-200"
-                              : "text-brand-teal ring-cyan-200",
+                              ? "bg-nb-orange text-nb-black"
+                              : "bg-nb-green text-nb-black",
                         )}
                       >
                         <Icon className="size-3" />
                       </span>
-                      <p className="text-[13px] font-medium text-ink">{event.label}</p>
-                      <p className="text-[12px] text-muted">
+                      <p className="text-[13px] font-bold text-nb-black">{event.label}</p>
+                      <p className="text-[12px] text-nb-muted">
                         {dateFmt.format(new Date(event.at))} UTC · {timeAgo(event.at)}
                       </p>
                     </li>
@@ -190,10 +190,10 @@ function Row({
 
   return (
     <div className="flex items-center justify-between gap-4 py-2.5">
-      <dt className="shrink-0 text-muted">{label}</dt>
+      <dt className="shrink-0 text-nb-muted">{label}</dt>
       <dd
         className={cn(
-          "flex min-w-0 items-center gap-1.5 text-right text-ink",
+          "flex min-w-0 items-center gap-1.5 text-right font-bold text-nb-black",
           mono && "font-mono text-[12px]",
         )}
       >
@@ -205,13 +205,9 @@ function Row({
             type="button"
             onClick={() => navigator.clipboard?.writeText(value).then(() => setCopied(true))}
             aria-label={`Copy ${label}`}
-            className="shrink-0 text-muted hover:text-ink"
+            className="shrink-0 text-nb-muted hover:text-nb-black"
           >
-            {copied ? (
-              <CircleCheck className="size-3.5 text-brand-teal" />
-            ) : (
-              <Copy className="size-3.5" />
-            )}
+            {copied ? <CircleCheck className="size-3.5" /> : <Copy className="size-3.5" />}
           </button>
         )}
       </dd>

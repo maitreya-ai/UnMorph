@@ -20,27 +20,27 @@ export const verdictMeta: Record<
     description: "Matches a registered original",
     icon: ShieldCheck,
     fill: "bg-verdict-authentic",
-    hex: "#0891B2",
-    badge: "bg-cyan-50 text-cyan-900 ring-cyan-600/20",
-    soft: "bg-cyan-50 text-cyan-700",
+    hex: "#88D498",
+    badge: "bg-nb-green text-nb-black",
+    soft: "bg-nb-green text-nb-black",
   },
   tampered: {
     label: "Tampered",
     description: "Altered after registration",
     icon: ShieldX,
     fill: "bg-verdict-tampered",
-    hex: "#E11D48",
-    badge: "bg-rose-50 text-rose-900 ring-rose-600/20",
-    soft: "bg-rose-50 text-rose-600",
+    hex: "#FF6B6B",
+    badge: "bg-nb-pink text-nb-black",
+    soft: "bg-nb-pink text-nb-black",
   },
   unregistered: {
     label: "Unregistered",
     description: "No registry record found",
     icon: ShieldQuestionMark,
     fill: "bg-verdict-unregistered",
-    hex: "#F59E0B",
-    badge: "bg-amber-50 text-amber-900 ring-amber-600/25",
-    soft: "bg-amber-50 text-amber-600",
+    hex: "#FFA552",
+    badge: "bg-nb-orange text-nb-black",
+    soft: "bg-nb-orange text-nb-black",
   },
 };
 
@@ -59,8 +59,8 @@ export function VerdictBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full font-medium whitespace-nowrap ring-1 ring-inset",
-        size === "sm" ? "px-2 py-0.5 text-[12px]" : "px-3 py-1 text-[13px]",
+        "inline-flex items-center gap-1.5 border-[2px] border-nb-black font-heading font-bold whitespace-nowrap uppercase",
+        size === "sm" ? "px-2 py-0.5 text-[11px]" : "px-3 py-1 text-[12px]",
         meta.badge,
         className,
       )}
